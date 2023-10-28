@@ -1,4 +1,4 @@
-import { OpenAIChat } from 'langchain/llms'
+import { OpenAI } from 'langchain/llms'
 import { DynamicTool } from 'langchain/tools'
 import { initializeAgentExecutor } from 'langchain/agents'
 import { callServiceEndpoint } from '@tw/utils/module/callServiceEndpoint.js'
@@ -84,7 +84,7 @@ const getDataBigQuery = new DynamicTool({
 })
 
 // Set up the LLM
-const llm = new OpenAIChat({
+const llm = new OpenAI({
   temperature: 0,
   openAIApiKey: process.env.OPENAI_API_KEY,
   modelName: 'gpt-4-0613',
