@@ -1,0 +1,28 @@
+{
+  "name": "langchain-ts",
+  "version": "0.0.1",
+  "description": "",
+  "type": "module",
+  "main": "./dist/index.js",
+  "scripts": {
+    "start": "tsx -r dotenv/config src/index.ts",
+    "alan": "tsx -r dotenv/config src/alan.ts"
+  },
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "@tw/constants": "^0.2.88",
+    "@tw/helpers": "^0.0.30",
+    "@tw/types": "^0.5.105",
+    "@tw/utils": "^0.8.109",
+    "dotenv": "^16.0.3",
+    "langchain": "^0.0.39"
+  },
+  "devDependencies": {
+    "@tsconfig/recommended": "^1.0.2",
+    "@types/node": "^18.15.5",
+    "prettier": "^2.8.3",
+    "tsx": "^3.12.3",
+    "typescript": "^5.0.4"
+  }
+}
