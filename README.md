@@ -1,8 +1,13 @@
 # langchain-ts
 
-
-Run the chain
+## Test langchain
 
 ```
 yarn start
+```
+
+## Run Alan
+
+```
+yarn alan
 ```

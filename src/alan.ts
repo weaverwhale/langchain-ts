@@ -84,7 +84,14 @@ const getDataBigQuery = new DynamicTool({
 })
 
 // Set up the LLM
-const llm = new OpenAIChat({ temperature: 0, openAIApiKey: process.env.OPENAI_API_KEY })
+const llm = new OpenAIChat({
+  temperature: 0,
+  openAIApiKey: process.env.OPENAI_API_KEY,
+  modelName: 'gpt-4-0613',
+  maxTokens: 300,
+})
+
+console.log('llm', llm)
 
 // Instantiate tools
 const tools = [helpCenter, getDataBigQuery]
