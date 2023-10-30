@@ -1,7 +1,7 @@
 import { OpenAI } from 'langchain/llms'
 import { DynamicTool } from 'langchain/tools'
 import { initializeAgentExecutor } from 'langchain/agents'
-import { callServiceEndpoint } from '@tw/utils/module/callServiceEndpoint.js'
+// import { callServiceEndpoint } from '@tw/utils/module/callServiceEndpoint.js'
 
 export type HelpCenterLink = {
   title: string
@@ -32,13 +32,24 @@ const helpCenter = new DynamicTool({
     here you can find answeres about Triple Whale platform"
     You should ask targeted questions.`,
   func: async (question: string) => {
-    const { data } = await callServiceEndpoint<HelpCenterResponse>(
-      'ai-nlq-help-center',
-      'get-answer',
-      {
-        question,
+    // const { data } = await callServiceEndpoint<HelpCenterResponse>(
+    //   'ai-nlq-help-center',
+    //   'get-answer',
+    //   {
+    //     question,
+    //   },
+    // )
+    const { data } = await fetch('http://localhost/api/v2/ai-nlq-help-center/get-answer', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization:
+          'Bearer eyJhbGciOiJSUzI1NiIsImtpZCI6IjBkMGU4NmJkNjQ3NDBjYWQyNDc1NjI4ZGEyZWM0OTZkZjUyYWRiNWQiLCJ0eXAiOiJKV1QifQ.eyJuYW1lIjoiTWlrZSBXZWF2ZXIiLCJhZG1pbiI6dHJ1ZSwidHdEZXYiOnRydWUsInR3RkYiOnRydWUsImlzcyI6Imh0dHBzOi8vc2VjdXJldG9rZW4uZ29vZ2xlLmNvbS9zaG9maWZpIiwiYXVkIjoic2hvZmlmaSIsImF1dGhfdGltZSI6MTY5NTk0MjE2OCwidXNlcl9pZCI6ImNlVkpWWVZRYVJRajJ1bjBmQ0pGWFVuRndJRTMiLCJzdWIiOiJjZVZKVllWUWFSUWoydW4wZkNKRlhVbkZ3SUUzIiwiaWF0IjoxNjk4NjI2NTg2LCJleHAiOjE2OTg2MzAxODYsImVtYWlsIjoibWljaGFlbEB0cmlwbGV3aGFsZS5jb20iLCJlbWFpbF92ZXJpZmllZCI6dHJ1ZSwiZmlyZWJhc2UiOnsiaWRlbnRpdGllcyI6eyJlbWFpbCI6WyJtaWNoYWVsQHRyaXBsZXdoYWxlLmNvbSJdfSwic2lnbl9pbl9wcm92aWRlciI6InBhc3N3b3JkIn19.NmGoFnv1HSDyOW3dOqtCzquABcMF-Z2AhIjWzgJWzaxFFPiYIIG0ibRoybU2RvGewHZ3vEsII7vk33miCRx094zhUVOPvPxVwZQ6mp1vS3QKTE9qm3ot08Y_vVurtUMIC53biDPWodslf2jDqHzTZcmBYlhOTvqk_6I-EB3SvPJ2zkor7chsErk4y29ca7a3v1vRg2VgKWzs4TxSq0KPTvPMrNB6m3mxmarN9hBmuyP1xuW2ifdtD-CdgbxiKgcUV24XaN1r0tGF9YoIo2C-445KUnIF_cOkpq2vep6NED_maIWe3ioo3bjLOdEImXmhPMZzNLfpbZol1QqsHtONkQ',
       },
-    )
+      body: JSON.stringify({
+        question,
+      }),
+    }).then((res) => res.json())
 
     if (data.answer) {
       return data.answer
@@ -68,7 +79,16 @@ const getDataBigQuery = new DynamicTool({
       returnQueryOnly: false,
     }
 
-    const response = await callServiceEndpoint('willy', 'answer-nlq-question', body)
+    // const response = await callServiceEndpoint('willy', 'answer-nlq-question', body)
+    const response = await fetch('http://localhost/api/v2/willy/answer-nlq-question', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization:
+          'Bearer eyJhbGciOiJSUzI1NiIsImtpZCI6IjBkMGU4NmJkNjQ3NDBjYWQyNDc1NjI4ZGEyZWM0OTZkZjUyYWRiNWQiLCJ0eXAiOiJKV1QifQ.eyJuYW1lIjoiTWlrZSBXZWF2ZXIiLCJhZG1pbiI6dHJ1ZSwidHdEZXYiOnRydWUsInR3RkYiOnRydWUsImlzcyI6Imh0dHBzOi8vc2VjdXJldG9rZW4uZ29vZ2xlLmNvbS9zaG9maWZpIiwiYXVkIjoic2hvZmlmaSIsImF1dGhfdGltZSI6MTY5NTk0MjE2OCwidXNlcl9pZCI6ImNlVkpWWVZRYVJRajJ1bjBmQ0pGWFVuRndJRTMiLCJzdWIiOiJjZVZKVllWUWFSUWoydW4wZkNKRlhVbkZ3SUUzIiwiaWF0IjoxNjk4NjI2NTg2LCJleHAiOjE2OTg2MzAxODYsImVtYWlsIjoibWljaGFlbEB0cmlwbGV3aGFsZS5jb20iLCJlbWFpbF92ZXJpZmllZCI6dHJ1ZSwiZmlyZWJhc2UiOnsiaWRlbnRpdGllcyI6eyJlbWFpbCI6WyJtaWNoYWVsQHRyaXBsZXdoYWxlLmNvbSJdfSwic2lnbl9pbl9wcm92aWRlciI6InBhc3N3b3JkIn19.NmGoFnv1HSDyOW3dOqtCzquABcMF-Z2AhIjWzgJWzaxFFPiYIIG0ibRoybU2RvGewHZ3vEsII7vk33miCRx094zhUVOPvPxVwZQ6mp1vS3QKTE9qm3ot08Y_vVurtUMIC53biDPWodslf2jDqHzTZcmBYlhOTvqk_6I-EB3SvPJ2zkor7chsErk4y29ca7a3v1vRg2VgKWzs4TxSq0KPTvPMrNB6m3mxmarN9hBmuyP1xuW2ifdtD-CdgbxiKgcUV24XaN1r0tGF9YoIo2C-445KUnIF_cOkpq2vep6NED_maIWe3ioo3bjLOdEImXmhPMZzNLfpbZol1QqsHtONkQ',
+      },
+      body: JSON.stringify(body),
+    }).then((res) => res.json())
 
     if (response.data) {
       let preparedData = ''
