@@ -63,13 +63,12 @@ const helpCenter = new DynamicTool({
 
 const getDataBigQuery = new DynamicTool({
   name: 'get_data',
-  description: `Useful for when you need to retrieve data from BigQuery to answer questions."
-  It takes natural language as input, automatically translates it into SQL, and returns the requested data.
-  Always specify a date range. If a user asks without specifying dates, use the last 30 days as the default.
-  Tool waiting that you also specifing metrics
-  You should not write shop name in your question to this tool
-  When describing results you should specify keys point about data and what was date range which you used
-  It can only return data and cannot make predictions. You should ask only targeted questions.`,
+  description: `Phrase your inquiry in natural language in English
+  Always include a date range in your question. If you omit dates, the last 30 days should be specified by default in your question.
+  Specify the metrics you are interested in.
+  Do not include the shop name in your query.
+  When reviewing the results, note the key data points and the date range you specified.
+  Avoid asking predictive questions and ensure your inquiries are targeted.`,
   func: async (question: string) => {
     const body = {
       shopId,
