@@ -5,6 +5,7 @@
   "type": "module",
   "main": "./dist/index.js",
   "scripts": {
+    "dev": "tsx watch -r dotenv/config src/index.ts",
     "start": "tsx -r dotenv/config src/index.ts",
     "alan": "tsx -r dotenv/config src/alan.ts"
   },
@@ -16,6 +17,7 @@
     "@tw/types": "^0.5.105",
     "@tw/utils": "^0.8.109",
     "dotenv": "^16.0.3",
+    "express": "^4.18.2",
     "langchain": "^0.0.175"
   },
   "devDependencies": {
