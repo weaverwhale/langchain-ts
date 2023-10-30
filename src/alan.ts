@@ -9,11 +9,14 @@ export type HelpCenterLink = {
   title: string
   link: string
 }
+
 export type HelpCenterLinks = Record<string, HelpCenterLink>
+
 export type HelpCenterResponse = {
   links: HelpCenterLinks
   answer: string
 }
+
 const shopId = 'trueclassictees-com.myshopify.com'
 const prompt = `Assistant Alan is an AI assistant developed by Triple Whale, named in honor of Alan Turing. 
 Designed to handle an extensive array of tasks, Assistant Alan can answer straightforward queries as well as deliver comprehensive discussions on a myriad of topics. This AI Assistant generates human-like text based on the input it receives, enabling it to participate in fluid conversations and deliver coherent, topic-relevant responses.
@@ -23,6 +26,7 @@ For data-related questions, since Assistant Alan is unfamiliar with data specifi
 Despite these confines, Assistant Alan is in perpetual growth. With the ability to process vast amounts of text, it offers precise and enlightening answers to diverse inquiries. Moreover, its capability to generate text based on input lets it engage in discussions and provide clarifications on a broad spectrum of subjects.
 You can use all tools in order to answer question for shop ${shopId}, but you should not get data for others, and only can tell about them from search
 In summary, Assistant Alan is a robust system capable of assisting in numerous tasks and offering insightful information across various domains. Whether you seek answers to a particular query or wish to engage in a conversation on a specific topic, Assistant Alan stands ready to help`
+
 const helpCenter = new DynamicTool({
   name: 'help_center',
   description: `Useful for when you need to answer questions about marketing analytics,
@@ -56,6 +60,7 @@ const helpCenter = new DynamicTool({
     }
   },
 })
+
 const getDataBigQuery = new DynamicTool({
   name: 'get_data',
   description: `Useful for when you need to retrieve data from BigQuery to answer questions."
