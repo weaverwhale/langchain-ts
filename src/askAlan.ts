@@ -117,7 +117,7 @@ const llm = new ChatOpenAI({
 // Instantiate tools
 const tools = [helpCenter, getDataBigQuery]
 
-async function question(question: string): Promise<any> {
+export async function question(question: string): Promise<any> {
   // Create conversational agent
   const conversationalAgent = await initializeAgentExecutorWithOptions(tools, llm, {
     agentType: 'chat-conversational-react-description',
@@ -131,6 +131,6 @@ async function question(question: string): Promise<any> {
   return chainValues
 }
 
-question('What is my Facebook ad spend and clicks last 5 days broken down by day? order by day')
+// question('What is my Facebook ad spend and clicks last 5 days broken down by day? order by day')
 
-// export default question
+export default question
