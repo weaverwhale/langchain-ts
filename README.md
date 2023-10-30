@@ -1,19 +1,21 @@
 # langchain-ts
 
+https://github.com/langchain-ai/langchainjs
+
 ## Install
 
 ```
 yarn
 ```
 
-## Test langchain
+## Develop
+
+```
+yarn dev
+```
+
+## Run
 
 ```
 yarn start
-```
-
-## Run Alan
-
-```
-yarn alan
 ```
