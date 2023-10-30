@@ -2,6 +2,7 @@ import { OpenAI } from 'langchain/llms'
 import { DynamicTool } from 'langchain/tools'
 import { initializeAgentExecutor } from 'langchain/agents'
 // import { callServiceEndpoint } from '@tw/utils/module/callServiceEndpoint.js'
+import { logger } from '@tw/utils/module/logger.js'
 
 export type HelpCenterLink = {
   title: string
@@ -52,6 +53,8 @@ const helpCenter = new DynamicTool({
     }).then((res) => res.json())
 
     if (data.answer) {
+      logger.info('Help center answer', data.answer)
+
       return data.answer
     } else {
       return "Didn't find requested data"
@@ -91,6 +94,8 @@ const getDataBigQuery = new DynamicTool({
     }).then((res) => res.json())
 
     if (response.data) {
+      logger.info('Willy answer', response.data)
+
       let preparedData = ''
 
       for (const item of response.data) {
@@ -111,7 +116,7 @@ const llm = new OpenAI({
   maxTokens: 300,
 })
 
-console.log('llm', llm)
+logger.info('llm', llm)
 
 // Instantiate tools
 const tools = [helpCenter, getDataBigQuery]
@@ -124,11 +129,11 @@ const conversationalAgent = await initializeAgentExecutor(
   true,
 )
 
-console.log('Agent initialized', conversationalAgent)
+logger.info('Agent initialized', conversationalAgent)
 
 const question = await conversationalAgent.call({
   input: 'What is my Facebook ad spend and clicks last 5 days broken down by day? order by day',
   chat_history: [prompt],
 })
 
-console.log('question', question)
+logger.info('question', question)
