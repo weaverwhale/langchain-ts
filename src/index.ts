@@ -1,9 +1,9 @@
 import * as dotenv from 'dotenv'
-import { OpenAI } from 'langchain'
+import { ChatOpenAI } from 'langchain/chat_models/openai'
 
 dotenv.config()
 
-const model = new OpenAI({
+const model = new ChatOpenAI({
   modelName: 'gpt-3.5-turbo',
   openAIApiKey: process.env.OPENAI_API_KEY,
 })

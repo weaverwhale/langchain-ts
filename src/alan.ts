@@ -1,21 +1,19 @@
-import { OpenAI } from 'langchain/llms'
 import { DynamicTool } from 'langchain/tools'
-import { initializeAgentExecutor } from 'langchain/agents'
+import { initializeAgentExecutorWithOptions } from 'langchain/agents'
+import { ChatOpenAI } from 'langchain/chat_models/openai'
 // import { callServiceEndpoint } from '@tw/utils/module/callServiceEndpoint.js'
 import { logger } from '@tw/utils/module/logger.js'
+// import { getSecret } from '@tw/utils/module/secrets'
 
 export type HelpCenterLink = {
   title: string
   link: string
 }
-
 export type HelpCenterLinks = Record<string, HelpCenterLink>
-
 export type HelpCenterResponse = {
   links: HelpCenterLinks
   answer: string
 }
-
 const shopId = 'trueclassictees-com.myshopify.com'
 const prompt = `Assistant Alan is an AI assistant developed by Triple Whale, named in honor of Alan Turing. 
 Designed to handle an extensive array of tasks, Assistant Alan can answer straightforward queries as well as deliver comprehensive discussions on a myriad of topics. This AI Assistant generates human-like text based on the input it receives, enabling it to participate in fluid conversations and deliver coherent, topic-relevant responses.
@@ -25,7 +23,6 @@ For data-related questions, since Assistant Alan is unfamiliar with data specifi
 Despite these confines, Assistant Alan is in perpetual growth. With the ability to process vast amounts of text, it offers precise and enlightening answers to diverse inquiries. Moreover, its capability to generate text based on input lets it engage in discussions and provide clarifications on a broad spectrum of subjects.
 You can use all tools in order to answer question for shop ${shopId}, but you should not get data for others, and only can tell about them from search
 In summary, Assistant Alan is a robust system capable of assisting in numerous tasks and offering insightful information across various domains. Whether you seek answers to a particular query or wish to engage in a conversation on a specific topic, Assistant Alan stands ready to help`
-
 const helpCenter = new DynamicTool({
   name: 'help_center',
   description: `Useful for when you need to answer questions about marketing analytics,
@@ -51,17 +48,14 @@ const helpCenter = new DynamicTool({
         question,
       }),
     }).then((res) => res.json())
-
     if (data.answer) {
       logger.info('Help center answer', data.answer)
-
       return data.answer
     } else {
       return "Didn't find requested data"
     }
   },
 })
-
 const getDataBigQuery = new DynamicTool({
   name: 'get_data',
   description: `Useful for when you need to retrieve data from BigQuery to answer questions."
@@ -81,7 +75,6 @@ const getDataBigQuery = new DynamicTool({
       generateInsights: false,
       returnQueryOnly: false,
     }
-
     // const response = await callServiceEndpoint('willy', 'answer-nlq-question', body)
     const response = await fetch('http://localhost/api/v2/willy/answer-nlq-question', {
       method: 'POST',
@@ -97,7 +90,6 @@ const getDataBigQuery = new DynamicTool({
       logger.info('Willy answer', response.data)
 
       let preparedData = ''
-
       for (const item of response.data) {
         preparedData += `${item.name} - ${item.value.slice(0, 50)}\n`
       }
@@ -109,31 +101,31 @@ const getDataBigQuery = new DynamicTool({
 })
 
 // Set up the LLM
-const llm = new OpenAI({
+const llm = new ChatOpenAI({
   temperature: 0,
   openAIApiKey: process.env.OPENAI_API_KEY,
-  modelName: 'gpt-4-0613',
+  modelName: 'gpt-3.5-turbo-16k-0613',
+  // modelName: 'gpt-4-0613',
   maxTokens: 300,
 })
-
-logger.info('llm', llm)
 
 // Instantiate tools
 const tools = [helpCenter, getDataBigQuery]
 
-// Create conversational agent
-const conversationalAgent = await initializeAgentExecutor(
-  tools,
-  llm,
-  'chat-conversational-react-description',
-  true,
-)
+async function question(question: string): Promise<any> {
+  // Create conversational agent
+  const conversationalAgent = await initializeAgentExecutorWithOptions(tools, llm, {
+    agentType: 'chat-conversational-react-description',
+    verbose: true,
+  })
+  const chainValues = await conversationalAgent.call({
+    input: question,
+    // input: 'What is my Facebook ad spend and clicks last 5 days broken down by day? order by day',
+    chat_history: [prompt],
+  })
+  return chainValues
+}
 
-logger.info('Agent initialized', conversationalAgent)
+question('What is my Facebook ad spend and clicks last 5 days broken down by day? order by day')
 
-const question = await conversationalAgent.call({
-  input: 'What is my Facebook ad spend and clicks last 5 days broken down by day? order by day',
-  chat_history: [prompt],
-})
-
-logger.info('question', question)
+// export default question

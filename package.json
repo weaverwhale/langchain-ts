@@ -16,7 +16,7 @@
     "@tw/types": "^0.5.105",
     "@tw/utils": "^0.8.109",
     "dotenv": "^16.0.3",
-    "langchain": "^0.0.39"
+    "langchain": "^0.0.175"
   },
   "devDependencies": {
     "@tsconfig/recommended": "^1.0.2",
