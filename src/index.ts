@@ -33,7 +33,7 @@ app.post('/ask-alan', async (req: Request, res: Response) => {
   try {
     const alanResponse = await askAlan(question)
     return res.json({
-      answer: alanResponse,
+      answer: alanResponse ?? 42,
     })
   } catch (e) {
     console.error(e)
@@ -52,9 +52,9 @@ app.post('/ask-gpt', async (req: Request, res: Response) => {
     })
 
   try {
-    const alanResponse = await askGPT(question)
+    const gptResponse = await askGPT(question)
     return res.json({
-      answer: alanResponse,
+      answer: gptResponse ?? 42,
     })
   } catch (e) {
     console.error(e)
