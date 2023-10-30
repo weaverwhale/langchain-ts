@@ -41,7 +41,7 @@ const helpCenter = new DynamicTool({
     //     question,
     //   },
     // )
-    const { data } = await fetch('http://localhost/api/v2/ai-nlq-help-center/get-answer', {
+    const { data } = await fetch('http://ai-nlq-help-center.srv.whale3.io/get-answer', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -52,6 +52,7 @@ const helpCenter = new DynamicTool({
         question,
       }),
     }).then((res) => res.json())
+
     if (data.answer) {
       logger.info('Help center answer', data.answer)
       return data.answer
@@ -80,7 +81,7 @@ const getDataBigQuery = new DynamicTool({
       returnQueryOnly: false,
     }
     // const response = await callServiceEndpoint('willy', 'answer-nlq-question', body)
-    const response = await fetch('http://localhost/api/v2/willy/answer-nlq-question', {
+    const response = await fetch('http://willy.srv.whale3.io/answer-nlq-question', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -122,11 +123,13 @@ export async function question(question: string): Promise<any> {
     agentType: 'chat-conversational-react-description',
     verbose: true,
   })
+
   const chainValues = await conversationalAgent.call({
     input: question,
     // input: 'What is my Facebook ad spend and clicks last 5 days broken down by day? order by day',
     chat_history: [prompt],
   })
+
   return chainValues
 }
 
