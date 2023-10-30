@@ -109,8 +109,8 @@ const getDataBigQuery = new DynamicTool({
 const llm = new ChatOpenAI({
   temperature: 0,
   openAIApiKey: process.env.OPENAI_API_KEY,
-  // modelName: 'gpt-3.5-turbo-16k-0613',
-  modelName: 'gpt-4-0613',
+  modelName: 'gpt-3.5-turbo-16k-0613',
+  // modelName: 'gpt-4-0613',
   maxTokens: 300,
 })
 
@@ -121,6 +121,7 @@ export async function question(question: string): Promise<any> {
   // Create conversational agent
   const conversationalAgent = await initializeAgentExecutorWithOptions(tools, llm, {
     agentType: 'chat-conversational-react-description',
+    handleParsingErrors: true,
     verbose: true,
   })
 
