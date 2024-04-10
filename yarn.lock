@@ -2392,6 +2392,20 @@ langchainhub@~0.0.6:
   resolved "https://registry.yarnpkg.com/langchainhub/-/langchainhub-0.0.6.tgz#9d2d06e4ce0807b4e8a31e19611f57aef990b54d"
   integrity sha512-SW6105T+YP1cTe0yMf//7kyshCgvCTyFBMTgH2H3s9rTAR4e+78DA/BBrUL/Mt4Q5eMWui7iGuAYb3pgGsdQ9w==
 
+langfuse-core@^3.4.0:
+  version "3.4.0"
+  resolved "https://registry.yarnpkg.com/langfuse-core/-/langfuse-core-3.4.0.tgz#16369cd558436f55cd2f40e424f37c97986cfa64"
+  integrity sha512-JxQl1x/jRVROD6BFblDPzo6YZWjGS1RPDQDiC66pWmoa17oGGyZHVmDnvTFZX2MMtEYH3wwAuSX28XKoKS0TSw==
+  dependencies:
+    mustache "^4.2.0"
+
+langfuse@^3.4.0:
+  version "3.4.0"
+  resolved "https://registry.yarnpkg.com/langfuse/-/langfuse-3.4.0.tgz#5c76df524e0b6c2534de8aa643da0e2869c6cee3"
+  integrity sha512-H2ibEa9hKbTs+M6NFAOaJlDeMhGdIwpjidnWQAoNtFfyyh3UAJ+DsMG3IZXe6gTdBV9UUz4EhynUUeMgWqd8Kg==
+  dependencies:
+    langfuse-core "^3.4.0"
+
 langsmith@~0.0.31:
   version "0.0.45"
   resolved "https://registry.yarnpkg.com/langsmith/-/langsmith-0.0.45.tgz#2894945dca6dd4c26e437e5f56ee8848c3c344a8"
@@ -2797,6 +2811,11 @@ msgpack-lite@^0.1.26:
     ieee754 "^1.1.8"
     int64-buffer "^0.1.9"
     isarray "^1.0.0"
+
+mustache@^4.2.0:
+  version "4.2.0"
+  resolved "https://registry.yarnpkg.com/mustache/-/mustache-4.2.0.tgz#e5892324d60a12ec9c2a73359edca52972bf6f64"
+  integrity sha512-71ippSywq5Yb7/tVYyGbkBggbU8H3u5Rz56fH60jGFgr8uHwxs+aSKeqmluIVzM0m0kB7xQjKS6qPfd0b2ZoqQ==
 
 mv@~2:
   version "2.1.1"
@@ -3649,7 +3668,7 @@ uuid@^8.0.0:
   resolved "https://registry.yarnpkg.com/uuid/-/uuid-8.3.2.tgz#80d5b5ced271bb9af6c445f21a1a04c606cefbe2"
   integrity sha512-+NYs2QeMWy+GWFOEm9xnn6HCDp0l7QBD7ml8zLUmJ+93Q5NF0NocErnwkTkXVFNiX3/fpC6afS8Dhb/gz7R7eg==
 
-uuid@^9.0.0:
+uuid@^9.0.0, uuid@^9.0.1:
   version "9.0.1"
   resolved "https://registry.yarnpkg.com/uuid/-/uuid-9.0.1.tgz#e188d4c8853cc722220392c424cd637f32293f30"
   integrity sha512-b+1eJOlsR9K8HJpow9Ok3fiWOWSIcIzXodvv0rQjVoOVNpWMpxf1wZNpt4y9h10odCNrqnYp1OBzRktckBe3sA==
