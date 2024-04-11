@@ -63,6 +63,7 @@ const helpCenter = new DynamicTool({
     const trace = langfuse.trace({
       name: 'help-center',
       sessionId: 'help-center.conversation.' + uuidv4(),
+      input: JSON.stringify(question),
     })
 
     const generation = trace.generation({
@@ -151,6 +152,7 @@ const getDataBigQuery = new DynamicTool({
     const trace = langfuse.trace({
       name: 'get_data',
       sessionId: 'get-data.conversation.' + uuidv4(),
+      input: JSON.stringify(question),
     })
 
     const generation = trace.generation({

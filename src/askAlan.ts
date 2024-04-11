@@ -6,6 +6,7 @@ export async function question(question: string, conversationId?: string): Promi
   const trace = langfuse.trace({
     name: 'ask-alan',
     sessionId: 'alan.conversation.' + (conversationId ?? uuidv4()),
+    input: JSON.stringify(question),
   })
 
   const generation = trace.generation({
