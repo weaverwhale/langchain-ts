@@ -32,14 +32,9 @@ export const streamQuestion = async (input: string = 'Tell me about yourself') =
 
 // to call
 export const askAlan = async (input: string = 'Tell me about yourself') => {
-  console.log('asking question', input)
-  const response = await agentExecutor.invoke({
+  return await agentExecutor.invoke({
     input,
   })
-
-  console.log(response)
-
-  return response
 }
 
 export const askGpt = async (input: string = 'Tell me about yourself') => {
