@@ -1,6 +1,7 @@
 import langfuse from './helpers/langfuse'
 import { model } from './helpers/llm'
 import { v4 as uuidv4 } from 'uuid'
+import { askMoby } from './helpers/llm'
 
 export async function question(question: string, conversationId?: string): Promise<any> {
   const trace = langfuse.trace({

@@ -47,9 +47,9 @@ export const prompt = ChatPromptTemplate.fromMessages([
 const helpCenter = new DynamicTool({
   name: 'help_center',
   description: `Useful for when you need to answer questions about marketing analytics,
-    how to use the platform, or about case studies from the knowledge base.
-    here you can find answeres about Triple Whale platform"
-    You should ask targeted questions.`,
+  how to use the platform, or about case studies from the knowledge base.
+  here you can find answeres about Triple Whale platform"
+  You should ask targeted questions.`,
   func: async (question: string) => {
     const trace = langfuse.trace({
       name: 'help-center',
@@ -121,9 +121,11 @@ const helpCenter = new DynamicTool({
   },
 })
 
-const askWilly = new DynamicTool({
-  name: 'get_data',
-  description: `Phrase your inquiry in natural language in English
+const askMoby = new DynamicTool({
+  name: 'ask_moby',
+  description: `
+  This is how you can talk to Moby directly.
+  Phrase your inquiry in natural language in English
   Always include a date range in your question. If you omit dates, the last 30 days should be specified by default in your question.
   Specify the metrics you are interested in.
   Do not include the shop name in your query.
@@ -132,8 +134,8 @@ const askWilly = new DynamicTool({
   func: async (question: string) => {
     const body = {
       shopId,
-      userId: null,
       question,
+      userId: null,
       messageId: null,
       stream: false,
       source: 'chat',
@@ -141,15 +143,15 @@ const askWilly = new DynamicTool({
     }
 
     const trace = langfuse.trace({
-      name: 'get-data',
-      sessionId: 'get-data.conversation.' + uuidv4(),
+      name: 'ask-moby',
+      sessionId: 'ask-moby.conversation.' + uuidv4(),
       input: JSON.stringify(question),
     })
 
     const generation = trace.generation({
       name: 'generation',
       input: JSON.stringify(question),
-      model: 'triple-whale-help-center',
+      model: 'moby',
     })
 
     try {
@@ -166,21 +168,21 @@ const askWilly = new DynamicTool({
         body: JSON.stringify(body),
       }).then((res) => res.json())
 
-      if (data && data.length > 0) {
-        console.log('Willy answer', data)
+      if (data && data.data && data.data.length > 0) {
+        console.log('Willy answer', data.data)
 
         let preparedData = ''
-        for (const item of data) {
+        for (const item of data.data) {
           preparedData += `${item.name} - ${item.value.slice(0, 50)}\n`
         }
 
         generation.end({
-          output: JSON.stringify(data),
+          output: JSON.stringify(data.data),
           level: 'DEFAULT',
         })
 
         trace.update({
-          output: JSON.stringify(data),
+          output: JSON.stringify(data.data),
         })
 
         return preparedData
@@ -193,6 +195,7 @@ const askWilly = new DynamicTool({
         trace.update({
           output: JSON.stringify(text),
         })
+        return text
       } else {
         const output = "Didn't find requested data"
         generation.end({
@@ -215,7 +218,7 @@ const askWilly = new DynamicTool({
         output: JSON.stringify(error),
       })
 
-      return 'Error in getDataBigQuery'
+      return 'Error in askMoby'
     } finally {
       await langfuse.shutdownAsync()
     }
@@ -281,7 +284,7 @@ const WikipediaQuery = new DynamicTool({
 
 export const tools = [
   helpCenter,
-  getDataBigQuery,
+  askMoby,
   WikipediaQuery,
   //new TavilySearchResults({}),
   new Calculator(),
