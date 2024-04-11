@@ -5,6 +5,7 @@ import * as dotenv from 'dotenv'
 import askAlan from './askAlan'
 import askGPT from './askGPT'
 import askLangfuse from './askLangfuse'
+import askMoby from './askMoby'
 
 // -----------------------
 // data
@@ -75,9 +76,30 @@ app.post('/ask-langfuse', async (req: Request, res: Response) => {
     })
 
   try {
-    const gptResponse = await askLangfuse(question, conversationId)
+    const langfuseResponse = await askLangfuse(question, conversationId)
     return res.json({
-      answer: gptResponse ?? 42,
+      answer: langfuseResponse ?? 42,
+    })
+  } catch (e) {
+    console.error(e)
+    return res.status(500).send(e)
+  }
+})
+
+app.post('/ask-moby', async (req: Request, res: Response) => {
+  const question = req.body?.question?.trim() ?? ''
+
+  if (question.length === 0)
+    return res.json({
+      code: 403,
+      message: 'Please provide a question',
+      error: true,
+    })
+
+  try {
+    const mobyResponse = await askMoby(question)
+    return res.json({
+      answer: mobyResponse ?? 42,
     })
   } catch (e) {
     console.error(e)

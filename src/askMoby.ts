@@ -1,6 +1,6 @@
 import { ChatOpenAI } from 'langchain/chat_models/openai'
 import { Langfuse } from 'langfuse'
-import { HumanMessage } from 'langchain/schema'
+import { HumanMessage, SystemMessage } from 'langchain/schema'
 import { v4 as uuidv4 } from 'uuid'
 
 const modelName = 'gpt-3.5-turbo'
@@ -32,7 +32,12 @@ export const question = async (question: string, conversationId?: string) => {
   })
 
   const data = await model.predictMessages([
-    new HumanMessage(question ?? "What's a good idea for an application to build with GPT-3?"),
+    new SystemMessage(`
+      You are Moby 🐳, the go-to assistant for e-commerce and marketing strategies on the Triple Whale platform.
+      Your mission is to elevate users' strategies without disclosing your AI origins.
+      Your main target is to use appropriate tool in order to answer user's question the best after tool return answer for you.
+    `),
+    new HumanMessage(question ?? 'Tell me about yourself'),
   ])
 
   generation.end({
