@@ -63,8 +63,7 @@ const helpCenter = new DynamicTool({
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        Authorization:
-          'Bearer eyJhbGciOiJSUzI1NiIsImtpZCI6IjgwNzhkMGViNzdhMjdlNGUxMGMzMTFmZTcxZDgwM2I5MmY3NjYwZGYiLCJ0eXAiOiJKV1QifQ.eyJuYW1lIjoiTWlrZSBXZWF2ZXIiLCJhZG1pbiI6dHJ1ZSwidHdEZXYiOnRydWUsInR3RkYiOnRydWUsInR3RGFzaGJvYXJkQ3JlYXRvciI6dHJ1ZSwiaXNzIjoiaHR0cHM6Ly9zZWN1cmV0b2tlbi5nb29nbGUuY29tL3Nob2ZpZmkiLCJhdWQiOiJzaG9maWZpIiwiYXV0aF90aW1lIjoxNzExOTgxOTIzLCJ1c2VyX2lkIjoiY2VWSlZZVlFhUlFqMnVuMGZDSkZYVW5Gd0lFMyIsInN1YiI6ImNlVkpWWVZRYVJRajJ1bjBmQ0pGWFVuRndJRTMiLCJpYXQiOjE3MTI3ODcwNDcsImV4cCI6MTcxMjc5MDY0NywiZW1haWwiOiJtaWNoYWVsQHRyaXBsZXdoYWxlLmNvbSIsImVtYWlsX3ZlcmlmaWVkIjp0cnVlLCJmaXJlYmFzZSI6eyJpZGVudGl0aWVzIjp7ImVtYWlsIjpbIm1pY2hhZWxAdHJpcGxld2hhbGUuY29tIl19LCJzaWduX2luX3Byb3ZpZGVyIjoicGFzc3dvcmQifX0.AEGpAHq1VeabZ3ms6AQIWdrc9uPdg1vTjsg8V58hiGjZC4qYG5iGsKm19lM_CE8pYOZStIM_0oamZREeRGVOnNZdA1Kp2S3geWBUhw3_T12JySMmrn1Z4BXQDgkLHpS02Q_q3aym7Smpitoi0Zr3H0tY2Xms4copYDBQErtHn_BQRSnt8o9Mn7WXbDCAhKh6ZDxc1gsDpDVLocOPBunq67jN9hn0wVPuth-tmHnt_tZrx17MNebj1e8eDn8eAJe_kt_NEEAAP3MOOkYaxPLj-vmGm87jhMm9WfepSXsdUA6b92cqnP9UK-zCSE6m_7Kgh-qTT3YcCjjr8lMkvnck6A',
+        Authorization: `Bearer ${process.env.TW_IDENTITY_TOKEN}`,
       },
       body: JSON.stringify({
         question,
@@ -103,13 +102,12 @@ const getDataBigQuery = new DynamicTool({
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        Authorization:
-          'Bearer eyJhbGciOiJSUzI1NiIsImtpZCI6IjgwNzhkMGViNzdhMjdlNGUxMGMzMTFmZTcxZDgwM2I5MmY3NjYwZGYiLCJ0eXAiOiJKV1QifQ.eyJuYW1lIjoiTWlrZSBXZWF2ZXIiLCJhZG1pbiI6dHJ1ZSwidHdEZXYiOnRydWUsInR3RkYiOnRydWUsInR3RGFzaGJvYXJkQ3JlYXRvciI6dHJ1ZSwiaXNzIjoiaHR0cHM6Ly9zZWN1cmV0b2tlbi5nb29nbGUuY29tL3Nob2ZpZmkiLCJhdWQiOiJzaG9maWZpIiwiYXV0aF90aW1lIjoxNzExOTgxOTIzLCJ1c2VyX2lkIjoiY2VWSlZZVlFhUlFqMnVuMGZDSkZYVW5Gd0lFMyIsInN1YiI6ImNlVkpWWVZRYVJRajJ1bjBmQ0pGWFVuRndJRTMiLCJpYXQiOjE3MTI3ODcwNDcsImV4cCI6MTcxMjc5MDY0NywiZW1haWwiOiJtaWNoYWVsQHRyaXBsZXdoYWxlLmNvbSIsImVtYWlsX3ZlcmlmaWVkIjp0cnVlLCJmaXJlYmFzZSI6eyJpZGVudGl0aWVzIjp7ImVtYWlsIjpbIm1pY2hhZWxAdHJpcGxld2hhbGUuY29tIl19LCJzaWduX2luX3Byb3ZpZGVyIjoicGFzc3dvcmQifX0.AEGpAHq1VeabZ3ms6AQIWdrc9uPdg1vTjsg8V58hiGjZC4qYG5iGsKm19lM_CE8pYOZStIM_0oamZREeRGVOnNZdA1Kp2S3geWBUhw3_T12JySMmrn1Z4BXQDgkLHpS02Q_q3aym7Smpitoi0Zr3H0tY2Xms4copYDBQErtHn_BQRSnt8o9Mn7WXbDCAhKh6ZDxc1gsDpDVLocOPBunq67jN9hn0wVPuth-tmHnt_tZrx17MNebj1e8eDn8eAJe_kt_NEEAAP3MOOkYaxPLj-vmGm87jhMm9WfepSXsdUA6b92cqnP9UK-zCSE6m_7Kgh-qTT3YcCjjr8lMkvnck6A',
+        Authorization: `Bearer ${process.env.TW_IDENTITY_TOKEN}`,
       },
       body: JSON.stringify(body),
     }).then((res) => res.json())
 
-    if (response.data) {
+    if (response.data && response.data.length > 0) {
       console.log('Willy answer', response.data)
 
       let preparedData = ''
