@@ -1,4 +1,5 @@
 // import { TavilySearchResults } from '@langchain/community/tools/tavily_search'
+import { WikipediaQueryRun } from '@langchain/community/tools/wikipedia_query_run'
 import { Calculator } from '@langchain/community/tools/calculator'
 import { DynamicTool } from '@langchain/community/tools/dynamic'
 import { ChatPromptTemplate } from '@langchain/core/prompts'
@@ -222,9 +223,67 @@ const getDataBigQuery = new DynamicTool({
   },
 })
 
+const WikipediaQuery = new DynamicTool({
+  name: 'wikipedia',
+  description: `
+    A tool for interacting with and fetching data from the Wikipedia API.
+  `,
+  func: async (question: string) => {
+    const trace = langfuse.trace({
+      name: 'wikipedia',
+      sessionId: 'get-data.conversation.' + uuidv4(),
+      input: JSON.stringify(question),
+    })
+
+    const generation = trace.generation({
+      name: 'generation',
+      input: JSON.stringify(question),
+      model: 'triple-whale-help-center',
+    })
+
+    try {
+      generation.update({
+        completionStartTime: new Date(),
+      })
+
+      const wikipediaQuery = new WikipediaQueryRun({
+        topKResults: 1,
+        maxDocContentLength: 500,
+      })
+
+      const result = await wikipediaQuery.call(question)
+
+      generation.end({
+        output: JSON.stringify(result),
+        level: 'DEFAULT',
+      })
+
+      trace.update({
+        output: JSON.stringify(result),
+      })
+
+      return result
+    } catch (error) {
+      generation.end({
+        output: JSON.stringify(error),
+        level: 'ERROR',
+      })
+
+      trace.update({
+        output: JSON.stringify(error),
+      })
+
+      return 'Error in wikipediaQuery'
+    } finally {
+      await langfuse.shutdownAsync()
+    }
+  },
+})
+
 export const tools = [
   helpCenter,
   getDataBigQuery,
+  WikipediaQuery,
   //new TavilySearchResults({}),
   new Calculator(),
 ]
