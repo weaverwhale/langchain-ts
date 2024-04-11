@@ -1,6 +1,11 @@
 import { ChatOpenAI } from '@langchain/openai'
-import { AgentExecutor, createOpenAIFunctionsAgent } from 'langchain/agents'
+import { convertToOpenAIFunction } from '@langchain/core/utils/function_calling'
 import { StringOutputParser } from '@langchain/core/output_parsers'
+import { RunnableSequence } from '@langchain/core/runnables'
+import { AgentExecutor, type AgentStep } from 'langchain/agents'
+
+import { formatToOpenAIFunctionMessages } from 'langchain/agents/format_scratchpad'
+import { OpenAIFunctionsAgentOutputParser } from 'langchain/agents/openai/output_parser'
 
 const outputParser = new StringOutputParser()
 
@@ -13,26 +18,29 @@ export const llm = new ChatOpenAI({
   temperature: 0,
 })
 
-const agent = await createOpenAIFunctionsAgent({
-  llm,
-  tools,
+const modelWithFunctions = llm.bind({
+  functions: tools.map((tool) => convertToOpenAIFunction(tool)),
+})
+
+const runnableAgent = RunnableSequence.from([
+  {
+    input: (i: { input: string; steps: AgentStep[] }) => i.input,
+    agent_scratchpad: (i: { input: string; steps: AgentStep[] }) =>
+      formatToOpenAIFunctionMessages(i.steps),
+  },
   prompt,
-})
+  modelWithFunctions,
+  new OpenAIFunctionsAgentOutputParser(),
+])
 
-export const agentExecutor = new AgentExecutor({
-  agent,
+const executor = AgentExecutor.fromAgentAndTools({
+  agent: runnableAgent,
   tools,
 })
-
-// to stream
-export const streamQuestion = async (input: string = 'Tell me about yourself') =>
-  agentExecutor.stream({
-    input,
-  })
 
 // to call
 export const askAlan = async (input: string = 'Tell me about yourself') => {
-  return await agentExecutor.invoke({
+  return await executor.invoke({
     input,
   })
 }

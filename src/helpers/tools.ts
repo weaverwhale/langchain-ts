@@ -1,8 +1,8 @@
 // import { TavilySearchResults } from '@langchain/community/tools/tavily_search'
 import { WikipediaQueryRun } from '@langchain/community/tools/wikipedia_query_run'
+import { ChatPromptTemplate, MessagesPlaceholder } from '@langchain/core/prompts'
 import { Calculator } from '@langchain/community/tools/calculator'
 import { DynamicTool } from '@langchain/community/tools/dynamic'
-import { ChatPromptTemplate } from '@langchain/core/prompts'
 import langfuse from './langfuse'
 import { v4 as uuidv4 } from 'uuid'
 
@@ -38,8 +38,8 @@ export const prompt = ChatPromptTemplate.fromMessages([
       Whether you seek answers to a particular query or wish to engage in a conversation on a specific topic, Assistant Alan stands ready to help.
     `,
   ],
-  ['ai', '{agent_scratchpad}'],
-  ['user', '{input}'],
+  ['human', '{input}'],
+  new MessagesPlaceholder('agent_scratchpad'),
 ])
 
 export const mobyPrompt = ChatPromptTemplate.fromMessages([
@@ -51,7 +51,7 @@ export const mobyPrompt = ChatPromptTemplate.fromMessages([
       Your main target is to use appropriate tool in order to answer user's question the best after tool return answer for you.
     `,
   ],
-  ['user', '{input}'],
+  ['human', '{input}'],
 ])
 
 const helpCenter = new DynamicTool({
