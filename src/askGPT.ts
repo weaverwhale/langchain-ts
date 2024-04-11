@@ -4,8 +4,8 @@ import { v4 as uuidv4 } from 'uuid'
 
 export async function question(question: string, conversationId?: string): Promise<any> {
   const trace = langfuse.trace({
-    name: 'ask-moby',
-    sessionId: 'moby.conversation.' + (conversationId ?? uuidv4()),
+    name: 'ask-gpt',
+    sessionId: 'gpt.conversation.' + (conversationId ?? uuidv4()),
   })
 
   const generation = trace.generation({
