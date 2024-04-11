@@ -1,18 +1,39 @@
 import * as dotenv from 'dotenv'
-import { ChatOpenAI } from 'langchain/chat_models/openai'
-import { HumanMessage } from 'langchain/schema'
+import { askGpt, model } from './helpers/llm'
+import { langfuse } from './helpers/langfuse'
+import { v4 as uuidv4 } from 'uuid'
 
 dotenv.config()
+export async function question(question: string, conversationId?: string): Promise<any> {
+  const trace = langfuse.trace({
+    name: 'ask-moby',
+    sessionId: 'moby.conversation.' + (conversationId ?? uuidv4()),
+  })
 
-const model = new ChatOpenAI({
-  modelName: 'gpt-3.5-turbo',
-  openAIApiKey: process.env.OPENAI_API_KEY,
-})
+  const generation = trace.generation({
+    name: 'generation',
+    input: JSON.stringify(question),
+    model,
+  })
 
-export async function question(question: string): Promise<any> {
-  return await model.predictMessages([
-    new HumanMessage(question ?? "What's a good idea for an application to build with GPT-3?"),
-  ])
+  generation.update({
+    completionStartTime: new Date(),
+  })
+
+  const response = await askGpt(question)
+
+  generation.end({
+    output: JSON.stringify(response),
+    level: 'DEFAULT',
+  })
+
+  trace.update({
+    output: JSON.stringify(response),
+  })
+
+  await langfuse.shutdownAsync()
+
+  return response
 }
 
 export default question

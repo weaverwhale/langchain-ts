@@ -1,55 +1,39 @@
-import { ChatOpenAI } from 'langchain/chat_models/openai'
-import { Langfuse } from 'langfuse'
-import { HumanMessage, SystemMessage } from 'langchain/schema'
+import { model, askMoby } from './helpers/llm'
+import { langfuse } from './helpers/langfuse'
 import { v4 as uuidv4 } from 'uuid'
 
-const modelName = 'gpt-3.5-turbo'
-const model = new ChatOpenAI({
-  modelName,
-  openAIApiKey: process.env.OPENAI_API_KEY,
-})
-const langfuse = new Langfuse({
-  publicKey: process.env.NEXT_PUBLIC_LANGFUSE_PUBLIC_KEY,
-  secretKey: process.env.LANGFUSE_SECRET_KEY,
-  baseUrl: process.env.NEXT_PUBLIC_LANGFUSE_BASE_URL ?? undefined,
-})
-langfuse.debug()
-
-export const question = async (question: string, conversationId?: string) => {
+export async function question(question: string, conversationId?: string): Promise<any> {
   const trace = langfuse.trace({
-    name: 'qa',
-    sessionId: 'lf.docs.conversation.' + (conversationId ?? uuidv4()),
+    name: 'ask-moby',
+    sessionId: 'moby.conversation.' + (conversationId ?? uuidv4()),
   })
 
   const generation = trace.generation({
     name: 'generation',
-    input: question,
-    model: modelName,
+    input: JSON.stringify(question),
+    model,
   })
 
   generation.update({
     completionStartTime: new Date(),
   })
 
-  const data = await model.predictMessages([
-    new SystemMessage(`
-      You are Moby 🐳, the go-to assistant for e-commerce and marketing strategies on the Triple Whale platform.
-      Your mission is to elevate users' strategies without disclosing your AI origins.
-      Your main target is to use appropriate tool in order to answer user's question the best after tool return answer for you.
-    `),
-    new HumanMessage(question ?? 'Tell me about yourself'),
-  ])
+  const response = await askMoby(question)
 
   generation.end({
-    output: data,
+    output: JSON.stringify(response),
     level: 'DEFAULT',
   })
 
   trace.update({
-    output: data,
+    output: JSON.stringify(response),
   })
 
-  return data
+  await langfuse.shutdownAsync()
+
+  return response
 }
+
+// question('What is my Facebook ad spend and clicks last 5 days broken down by day? order by day')
 
 export default question
