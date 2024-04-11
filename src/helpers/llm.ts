@@ -3,13 +3,9 @@ import { convertToOpenAIFunction } from '@langchain/core/utils/function_calling'
 import { StringOutputParser } from '@langchain/core/output_parsers'
 import { RunnableSequence } from '@langchain/core/runnables'
 import { AgentExecutor, type AgentStep } from 'langchain/agents'
-
 import { formatToOpenAIFunctionMessages } from 'langchain/agents/format_scratchpad'
 import { OpenAIFunctionsAgentOutputParser } from 'langchain/agents/openai/output_parser'
-
-const outputParser = new StringOutputParser()
-
-import { tools, prompt, mobyPrompt } from './tools'
+import { tools, prompt } from './tools'
 
 export const model = 'gpt-3.5-turbo-1106'
 export const llm = new ChatOpenAI({
@@ -17,6 +13,8 @@ export const llm = new ChatOpenAI({
   openAIApiKey: process.env.OPENAI_API_KEY,
   temperature: 0,
 })
+
+const outputParser = new StringOutputParser()
 
 const modelWithFunctions = llm.bind({
   functions: tools.map((tool) => convertToOpenAIFunction(tool)),
@@ -38,21 +36,13 @@ const executor = AgentExecutor.fromAgentAndTools({
   tools,
 })
 
-// to call
-export const askAlan = async (input: string = 'Tell me about yourself') => {
-  return await executor.invoke({
-    input,
-  })
-}
-
 export const askGpt = async (input: string = 'Tell me about yourself') => {
   const chain = llm.pipe(outputParser)
   return await chain.invoke(input)
 }
 
 export const askMoby = async (input: string = 'Tell me about yourself') => {
-  const chain = mobyPrompt.pipe(llm).pipe(outputParser)
-  return await chain.invoke({
+  return await executor.invoke({
     input,
   })
 }

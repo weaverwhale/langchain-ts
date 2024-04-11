@@ -1,5 +1,5 @@
 import langfuse from './helpers/langfuse'
-import { model, askMoby } from './helpers/llm'
+import { model } from './helpers/llm'
 import { v4 as uuidv4 } from 'uuid'
 
 export async function question(question: string, conversationId?: string): Promise<any> {

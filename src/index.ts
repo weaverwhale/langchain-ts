@@ -2,7 +2,6 @@ import express, { Request, Response } from 'express'
 import chalk from 'chalk'
 import * as dotenv from 'dotenv'
 
-import askAlan from './askAlan'
 import askGPT from './askGPT'
 import askMoby from './askMoby'
 
@@ -19,27 +18,6 @@ const app = express()
 const port = 9179
 const appName = chalk.hex('#1877f2')('[🐳] ')
 app.use(express.json())
-
-app.post('/ask-alan', async (req: Request, res: Response) => {
-  const question = req.body?.question?.trim() ?? ''
-
-  if (question.length === 0)
-    return res.json({
-      code: 403,
-      message: 'Please provide a question',
-      error: true,
-    })
-
-  try {
-    const alanResponse = await askAlan(question)
-    return res.json({
-      answer: alanResponse ?? 42,
-    })
-  } catch (e) {
-    console.error(e)
-    return res.status(500).send(e)
-  }
-})
 
 app.post('/ask-gpt', async (req: Request, res: Response) => {
   const question = req.body?.question?.trim() ?? ''
