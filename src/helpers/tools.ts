@@ -85,20 +85,28 @@ const helpCenter = new DynamicTool({
         }),
       }).then((res) => res.json())
 
-      generation.end({
-        output: JSON.stringify(data),
-        level: 'DEFAULT',
-      })
-
-      trace.update({
-        output: JSON.stringify(data),
-      })
-
       if (data && data.answer) {
         console.log('Help center answer', data.answer)
+        generation.end({
+          output: JSON.stringify(data.answer),
+          level: 'DEFAULT',
+        })
+
+        trace.update({
+          output: JSON.stringify(data.answer),
+        })
         return data.answer
       } else {
-        return "Didn't find help center answer"
+        const output = "Didn't find requested data"
+        generation.end({
+          output,
+          level: 'WARNING',
+        })
+
+        trace.update({
+          output,
+        })
+        return output
       }
     } catch (error) {
       console.error('Error in helpCenter', error)
@@ -181,16 +189,16 @@ const getDataBigQuery = new DynamicTool({
 
         return preparedData
       } else {
+        const output = "Didn't find requested data"
         generation.end({
-          output: "Didn't find requested data",
+          output,
           level: 'WARNING',
         })
 
         trace.update({
-          output: "Didn't find requested data",
+          output,
         })
-
-        return "Didn't find requested data"
+        return output
       }
     } catch (error) {
       generation.end({
