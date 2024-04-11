@@ -150,7 +150,7 @@ const getDataBigQuery = new DynamicTool({
     }
 
     const trace = langfuse.trace({
-      name: 'get_data',
+      name: 'get-data',
       sessionId: 'get-data.conversation.' + uuidv4(),
       input: JSON.stringify(question),
     })
