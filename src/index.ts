@@ -21,7 +21,6 @@ const appName = chalk.hex('#1877f2')('[🐳] ')
 app.use(express.json())
 
 app.post('/ask-alan', async (req: Request, res: Response) => {
-  console.log(req.body)
   const question = req.body?.question?.trim() ?? ''
 
   if (question.length === 0)

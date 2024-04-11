@@ -59,6 +59,20 @@ const helpCenter = new DynamicTool({
     here you can find answeres about Triple Whale platform"
     You should ask targeted questions.`,
   func: async (question: string) => {
+    const trace = langfuse.trace({
+      name: 'help-center',
+    })
+
+    const generation = trace.generation({
+      name: 'generation',
+      input: JSON.stringify(question),
+      model: 'triple-whale-help-center',
+    })
+
+    generation.update({
+      completionStartTime: new Date(),
+    })
+
     try {
       const { data } = await fetch('http://ai-nlq-help-center.srv.whale3.io/get-answer', {
         method: 'POST',
@@ -71,6 +85,15 @@ const helpCenter = new DynamicTool({
         }),
       }).then((res) => res.json())
 
+      generation.end({
+        output: JSON.stringify(data),
+        level: 'DEFAULT',
+      })
+
+      trace.update({
+        output: JSON.stringify(data),
+      })
+
       if (data.answer) {
         console.log('Help center answer', data.answer)
         return data.answer
@@ -79,7 +102,19 @@ const helpCenter = new DynamicTool({
       }
     } catch (error) {
       console.error('Error in helpCenter', error)
+
+      generation.end({
+        output: JSON.stringify(error),
+        level: 'ERROR',
+      })
+
+      trace.update({
+        output: JSON.stringify(error),
+      })
+
       return 'Error in helpCenter'
+    } finally {
+      await langfuse.shutdownAsync()
     }
   },
 })
@@ -103,8 +138,21 @@ const getDataBigQuery = new DynamicTool({
       returnQueryOnly: false,
     }
 
+    const trace = langfuse.trace({
+      name: 'help-center',
+    })
+
+    const generation = trace.generation({
+      name: 'generation',
+      input: JSON.stringify(question),
+      model: 'triple-whale-help-center',
+    })
+
     try {
-      // const response = await callServiceEndpoint('willy', 'answer-nlq-question', body)
+      generation.update({
+        completionStartTime: new Date(),
+      })
+
       const response = await fetch('http://willy.srv.whale3.io/answer-nlq-question', {
         method: 'POST',
         headers: {
@@ -121,12 +169,42 @@ const getDataBigQuery = new DynamicTool({
         for (const item of response.data) {
           preparedData += `${item.name} - ${item.value.slice(0, 50)}\n`
         }
+
+        generation.end({
+          output: JSON.stringify(response.data),
+          level: 'DEFAULT',
+        })
+
+        trace.update({
+          output: JSON.stringify(response.data),
+        })
+
         return preparedData
       } else {
+        generation.end({
+          output: "Didn't find requested data",
+          level: 'WARNING',
+        })
+
+        trace.update({
+          output: "Didn't find requested data",
+        })
+
         return "Didn't find requested data"
       }
     } catch (error) {
+      generation.end({
+        output: JSON.stringify(error),
+        level: 'ERROR',
+      })
+
+      trace.update({
+        output: JSON.stringify(error),
+      })
+
       return 'Error in getDataBigQuery'
+    } finally {
+      await langfuse.shutdownAsync()
     }
   },
 })
