@@ -1,9 +1,7 @@
-import * as dotenv from 'dotenv'
-import { askGpt, model } from './helpers/llm'
-import { langfuse } from './helpers/langfuse'
+import langfuse from './helpers/langfuse'
+import { model, askGpt } from './helpers/llm'
 import { v4 as uuidv4 } from 'uuid'
 
-dotenv.config()
 export async function question(question: string, conversationId?: string): Promise<any> {
   const trace = langfuse.trace({
     name: 'ask-moby',
