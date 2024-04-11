@@ -3,6 +3,7 @@ import { Calculator } from '@langchain/community/tools/calculator'
 import { DynamicTool } from '@langchain/community/tools/dynamic'
 import { ChatPromptTemplate } from '@langchain/core/prompts'
 import langfuse from './langfuse'
+import { v4 as uuidv4 } from 'uuid'
 
 export type HelpCenterLink = {
   title: string
@@ -61,6 +62,7 @@ const helpCenter = new DynamicTool({
   func: async (question: string) => {
     const trace = langfuse.trace({
       name: 'help-center',
+      sessionId: 'help-center.conversation.' + uuidv4(),
     })
 
     const generation = trace.generation({
@@ -147,7 +149,8 @@ const getDataBigQuery = new DynamicTool({
     }
 
     const trace = langfuse.trace({
-      name: 'help-center',
+      name: 'get_data',
+      sessionId: 'get-data.conversation.' + uuidv4(),
     })
 
     const generation = trace.generation({
