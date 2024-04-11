@@ -94,7 +94,7 @@ const helpCenter = new DynamicTool({
         output: JSON.stringify(data),
       })
 
-      if (data.answer) {
+      if (data && data.answer) {
         console.log('Help center answer', data.answer)
         return data.answer
       } else {
@@ -153,7 +153,7 @@ const getDataBigQuery = new DynamicTool({
         completionStartTime: new Date(),
       })
 
-      const response = await fetch('http://willy.srv.whale3.io/answer-nlq-question', {
+      const { data } = await fetch('http://willy.srv.whale3.io/answer-nlq-question', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -162,21 +162,21 @@ const getDataBigQuery = new DynamicTool({
         body: JSON.stringify(body),
       }).then((res) => res.json())
 
-      if (response.data && response.data.length > 0) {
-        console.log('Willy answer', response.data)
+      if (data && data.length > 0) {
+        console.log('Willy answer', data)
 
         let preparedData = ''
-        for (const item of response.data) {
+        for (const item of data) {
           preparedData += `${item.name} - ${item.value.slice(0, 50)}\n`
         }
 
         generation.end({
-          output: JSON.stringify(response.data),
+          output: JSON.stringify(data),
           level: 'DEFAULT',
         })
 
         trace.update({
-          output: JSON.stringify(response.data),
+          output: JSON.stringify(data),
         })
 
         return preparedData
