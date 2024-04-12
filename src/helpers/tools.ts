@@ -207,14 +207,14 @@ const WikipediaQuery = new DynamicTool({
   func: async (question: string) => {
     const trace = langfuse.trace({
       name: 'wikipedia',
-      sessionId: 'get-data.conversation.' + uuidv4(),
+      sessionId: 'wikipedia.conversation.' + uuidv4(),
       input: JSON.stringify(question),
     })
 
     const generation = trace.generation({
       name: 'generation',
       input: JSON.stringify(question),
-      model: 'triple-whale-help-center',
+      model: 'wikipedia',
     })
 
     try {
