@@ -1,43 +1,58 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <meta charset="UTF-8">
+    <meta charset="UTF-8" />
     <title>🐳 Langchain</title>
     <style>
-      pre { display: inline; }
+      pre {
+        display: inline;
+      }
+      #app {
+        margin: 0 auto;
+        width: 80%;
+        max-width: 500px;
+      }
     </style>
   </head>
 
   <body>
     <div id="app">
       <h1>🐳 Langchain</h1>
-      <p>You can post to <pre>/ask-moby</pre> with an object containing a <pre>question</pre></p>
-      <p>Example below, asking "Tell me a bit about yourself":</p>
+      <div>
+        You can post to
+        <pre>/ask-moby</pre>
+        with an object containing a
+        <pre>question</pre>
+        .
+      </div>
+      <p>Example below, asking "Tell me a bit about yourself"</p>
     </div>
   </body>
 
   <script>
-    const app = document.getElementById('app');
+    const app = document.getElementById('app')
     fetch('/ask-moby', {
       method: 'POST',
       headers: {
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        question: 'Tell me a bit about yourself'
-      })
-    }).then(res => res.json()).then(data => {
-      try {
-        const parsedData = JSON.parse(JSON.stringify(data));
-        console.log(parsedData);
+        question: 'Tell me a bit about yourself',
+      }),
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        try {
+          const parsedData = JSON.parse(JSON.stringify(data))
+          console.log(parsedData)
 
-        if(parsedData.answer) {
-          app.innerHTML += "<h2>Answer from Moby:</h2>"
-          const div = document.createElement('div');
-          div.innerHTML = parsedData.answer.output ?? parsedData.answer;
-          app.appendChild(div);
-        }
-      } catch {}
-    });
+          if (parsedData.answer) {
+            app.innerHTML += '<h2>Answer from Moby:</h2>'
+            const div = document.createElement('div')
+            div.innerHTML = parsedData.answer.output ?? parsedData.answer
+            app.appendChild(div)
+          }
+        } catch {}
+      })
   </script>
 </html>
