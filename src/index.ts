@@ -61,6 +61,8 @@ app.post('/ask-moby', async (req: Request, res: Response) => {
   }
 })
 
+app.use(express.static('public'))
+
 // -----------------------
 // logger
 // -----------------------
