@@ -4,7 +4,7 @@ import { ChatPromptTemplate, MessagesPlaceholder } from '@langchain/core/prompts
 import { Calculator } from '@langchain/community/tools/calculator'
 import { DynamicTool } from '@langchain/community/tools/dynamic'
 import langfuse from './langfuse'
-import { mobySystemPrompt, helpCenterPrompt, mobyPrompt } from './constants'
+import { mobySystemPrompt, helpCenterPrompt, mobyPrompt, wikipediaPrompt } from './constants'
 import { v4 as uuidv4 } from 'uuid'
 
 export type HelpCenterLink = {
@@ -203,9 +203,7 @@ const askMoby = new DynamicTool({
 
 const WikipediaQuery = new DynamicTool({
   name: 'wikipedia',
-  description: `
-    A tool for interacting with and fetching data from the Wikipedia API.
-  `,
+  description: wikipediaPrompt,
   func: async (question: string) => {
     const trace = langfuse.trace({
       name: 'wikipedia',

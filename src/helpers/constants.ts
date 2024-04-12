@@ -30,3 +30,7 @@ Do not include the shop name in your query.
 When reviewing the results, note the key data points and the date range you specified.
 Avoid asking predictive questions and ensure your inquiries are targeted.
 `
+
+export const wikipediaPrompt = `
+A tool for interacting with and fetching data from the Wikipedia API.
+`
