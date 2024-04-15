@@ -26,11 +26,14 @@
         <pre>question</pre>
         .
       </div>
-      <p>Example below, asking "Tell me a bit about yourself"</p>
       <p>
         <a target="_blank" href="https://github.com/weaverwhale/langchain-ts">Github</a> |
         <a target="_blank" href="https://langchain-ts.onrender.com/">Live demo</a>
       </p>
+      <div id="answer">
+        <h2>Asking Moby: "Tell me a bit about yourself"</h2>
+        <p>Please be patient; he usually takes 5-10 seconds to reply.</p>
+      </div>
     </div>
   </body>
 
@@ -52,10 +55,12 @@
           console.log(parsedData)
 
           if (parsedData.answer) {
-            app.innerHTML += '<h2>Answer from Moby:</h2>'
-            const div = document.createElement('div')
-            div.innerHTML = parsedData.answer.output ?? parsedData.answer
-            app.appendChild(div)
+            const d1 = document.createElement('div')
+            d1.innerHTML += '<h2>Moby says:</h2>'
+
+            const d2 = document.createElement('div')
+            d2.innerHTML = parsedData.answer.output ?? parsedData.answer
+            document.getElementById('answer').innerHTML = `${d1.innerHTML}${d2.innerHTML}`
           }
         } catch {}
       })
