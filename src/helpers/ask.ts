@@ -16,7 +16,7 @@ export const ask = async (
   input: string,
   source: SourceType,
   conversationId?: string,
-): Promise<AnswerResponse> => {
+): Promise<Answer> => {
   const isMoby = source === 'moby'
   const { data } = await supabase
     .from('conversations')
@@ -76,17 +76,10 @@ export const ask = async (
     if (error) {
       console.error(error)
     }
-
-    return {
-      ...(invokee as any),
-      conversationId,
-      source,
-    }
   } else {
-    const newId = random()
     const { error } = await supabase.from('conversations').insert([
       {
-        id: newId,
+        id: conversationId,
         source,
         messages: [
           ...messages,
@@ -99,12 +92,12 @@ export const ask = async (
     if (error) {
       console.error(error)
     }
+  }
 
-    return {
-      ...(invokee as any),
-      conversationId: newId,
-      source,
-    }
+  return {
+    ...(invokee as any),
+    conversationId,
+    source,
   }
 }
 
@@ -112,7 +105,7 @@ export async function askQuestion(
   input: string = defaultQuestion,
   source: SourceType,
   conversationId?: string,
-): Promise<AnswerResponse> {
+): Promise<Answer> {
   const sessionId = conversationId || random()
   const trace = langfuse.trace({
     name: `ask-${source}`,
@@ -133,12 +126,12 @@ export async function askQuestion(
   const response = await ask(input, source, sessionId)
 
   generation.end({
-    output: JSON.stringify(response?.answer?.output ?? response),
+    output: JSON.stringify(response?.output ?? response),
     level: 'DEFAULT',
   })
 
   trace.update({
-    output: JSON.stringify(response?.answer?.output ?? response),
+    output: JSON.stringify(response?.output ?? response),
   })
 
   await langfuse.shutdownAsync()

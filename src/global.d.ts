@@ -20,10 +20,6 @@ declare global {
     conversationId: string
     source: SourceType
   }
-
-  type AnswerResponse = {
-    answer: Answer
-  }
 }
 
 export {}
