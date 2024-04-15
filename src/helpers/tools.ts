@@ -5,7 +5,6 @@ import { Calculator } from '@langchain/community/tools/calculator'
 import { DynamicTool } from '@langchain/community/tools/dynamic'
 import langfuse from './langfuse'
 import { mobySystemPrompt, helpCenterPrompt, mobyPrompt, wikipediaPrompt } from './constants'
-import { v4 as uuidv4 } from 'uuid'
 
 export type HelpCenterLink = {
   title: string
@@ -24,6 +23,7 @@ const systemPrompt = await langfuse.getPrompt('Moby System Prompt')
 const compiledSystemPrompt = systemPrompt.prompt ? systemPrompt.prompt : mobySystemPrompt(shopId)
 export const prompt = ChatPromptTemplate.fromMessages([
   ['system', compiledSystemPrompt],
+  new MessagesPlaceholder('chat_history'),
   ['human', '{input}'],
   new MessagesPlaceholder('agent_scratchpad'),
 ])
@@ -35,7 +35,6 @@ const helpCenter = new DynamicTool({
   func: async (question: string) => {
     const trace = langfuse.trace({
       name: 'help-center',
-      sessionId: 'help-center.conversation.' + uuidv4(),
       input: JSON.stringify(question),
     })
 
@@ -120,7 +119,6 @@ const askMoby = new DynamicTool({
 
     const trace = langfuse.trace({
       name: 'ask-moby',
-      sessionId: 'ask-moby.conversation.' + uuidv4(),
       input: JSON.stringify(question),
     })
 
@@ -207,7 +205,6 @@ const WikipediaQuery = new DynamicTool({
   func: async (question: string) => {
     const trace = langfuse.trace({
       name: 'wikipedia',
-      sessionId: 'wikipedia.conversation.' + uuidv4(),
       input: JSON.stringify(question),
     })
 

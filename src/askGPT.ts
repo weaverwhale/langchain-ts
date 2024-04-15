@@ -1,11 +1,12 @@
+import { StringOutputParser } from '@langchain/core/output_parsers'
 import langfuse from './helpers/langfuse'
-import { model, askGpt } from './helpers/llm'
-import { v4 as uuidv4 } from 'uuid'
+import { model, llm } from './helpers/llm'
+import random from './helpers/idGenerator'
 
 export async function question(question: string, conversationId?: string): Promise<any> {
   const trace = langfuse.trace({
     name: 'ask-gpt',
-    sessionId: 'gpt.conversation.' + (conversationId ?? uuidv4()),
+    sessionId: 'gpt.conversation.' + (conversationId ?? random()),
     input: JSON.stringify(question),
   })
 
@@ -19,7 +20,8 @@ export async function question(question: string, conversationId?: string): Promi
     completionStartTime: new Date(),
   })
 
-  const response = await askGpt(question)
+  const chain = llm.pipe(new StringOutputParser())
+  const response = await chain.invoke(question)
 
   generation.end({
     output: JSON.stringify(response),

@@ -21,6 +21,7 @@ app.use(express.json())
 
 app.post('/ask-gpt', async (req: Request, res: Response) => {
   const question = req.body?.question?.trim() ?? ''
+  const conversationId = req.body?.conversationId?.trim() ?? null
 
   if (question.length === 0)
     return res.json({
@@ -30,7 +31,7 @@ app.post('/ask-gpt', async (req: Request, res: Response) => {
     })
 
   try {
-    const gptResponse = await askGPT(question)
+    const gptResponse = await askGPT(question, conversationId)
     return res.json({
       answer: gptResponse ?? 42,
     })
@@ -41,7 +42,8 @@ app.post('/ask-gpt', async (req: Request, res: Response) => {
 })
 
 app.post('/ask-moby', async (req: Request, res: Response) => {
-  const question = req.body?.question?.trim() ?? ''
+  const question = req.body?.question?.toString().trim() ?? ''
+  const conversationId = req.body?.conversationId?.toString().trim() ?? null
 
   if (question.length === 0)
     return res.json({
@@ -51,7 +53,7 @@ app.post('/ask-moby', async (req: Request, res: Response) => {
     })
 
   try {
-    const mobyResponse = await askMoby(question)
+    const mobyResponse = await askMoby(question, conversationId)
     return res.json({
       answer: mobyResponse ?? 42,
     })
