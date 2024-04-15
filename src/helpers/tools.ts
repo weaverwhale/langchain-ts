@@ -4,7 +4,13 @@ import { ChatPromptTemplate, MessagesPlaceholder } from '@langchain/core/prompts
 import { Calculator } from '@langchain/community/tools/calculator'
 import { DynamicTool } from '@langchain/community/tools/dynamic'
 import langfuse from './langfuse'
-import { mobySystemPrompt, helpCenterPrompt, mobyPrompt, wikipediaPrompt } from './constants'
+import {
+  genericSystemPrompt,
+  mobySystemPrompt,
+  helpCenterPrompt,
+  mobyPrompt,
+  wikipediaPrompt,
+} from './constants'
 
 export type HelpCenterLink = {
   title: string
@@ -18,15 +24,19 @@ export type HelpCenterResponse = {
   answer: string
 }
 
+const generatePromptTemplate = (sentPrompt: string) =>
+  ChatPromptTemplate.fromMessages([
+    ['system', sentPrompt],
+    new MessagesPlaceholder('chat_history'),
+    ['human', '{input}'],
+    new MessagesPlaceholder('agent_scratchpad'),
+  ])
+
 export const shopId = 'trueclassictees-com.myshopify.com'
 const systemPrompt = await langfuse.getPrompt('Moby System Prompt')
 const compiledSystemPrompt = systemPrompt.prompt ? systemPrompt.prompt : mobySystemPrompt(shopId)
-export const prompt = ChatPromptTemplate.fromMessages([
-  ['system', compiledSystemPrompt],
-  new MessagesPlaceholder('chat_history'),
-  ['human', '{input}'],
-  new MessagesPlaceholder('agent_scratchpad'),
-])
+export const mobySystemPromptTemplate = generatePromptTemplate(compiledSystemPrompt)
+export const gptSystemPromptTemplate = generatePromptTemplate(genericSystemPrompt)
 
 const remoteHelpCenterPrompt = await langfuse.getPrompt('Help Center Prompt')
 const helpCenter = new DynamicTool({

@@ -21,7 +21,7 @@ app.use(express.json())
 
 app.post('/ask-gpt', async (req: Request, res: Response) => {
   const question = req.body?.question?.trim() ?? ''
-  const conversationId = req.body?.conversationId?.trim() ?? null
+  const conversationId = req.body?.conversationId?.toString().trim() ?? null
 
   if (question.length === 0)
     return res.json({
