@@ -252,11 +252,9 @@ const WikipediaQuery = new DynamicTool({
 })
 
 export const tools = [
-  helpCenter,
-  askMoby,
   WikipediaQuery,
   //new TavilySearchResults({}),
   new Calculator(),
 ]
 
-export default tools
+export const mobyTools = [...tools, helpCenter, askMoby]

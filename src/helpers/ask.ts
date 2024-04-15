@@ -1,6 +1,6 @@
 import langfuse from './langfuse'
 import { supabase } from './supabase'
-import { tools, mobySystemPromptTemplate, gptSystemPromptTemplate } from './tools'
+import { tools, mobyTools, mobySystemPromptTemplate, gptSystemPromptTemplate } from './tools'
 import { model, llm, modelWithFunctions } from './llm'
 import { defaultQuestion } from './constants'
 import random from './idGenerator'
@@ -46,7 +46,7 @@ export const ask = async (
 
   const executor = AgentExecutor.fromAgentAndTools({
     agent: runnableAgent,
-    tools: isMoby ? tools : [],
+    tools: isMoby ? mobyTools : tools,
   })
   const invokee = await executor.invoke(
     {
