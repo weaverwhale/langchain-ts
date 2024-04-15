@@ -1,7 +1,7 @@
 import langfuse from './langfuse'
 import { supabase } from './supabase'
 import { tools, mobySystemPromptTemplate, gptSystemPromptTemplate } from './tools'
-import { model, modelWithFunctions } from './llm'
+import { model, llm, modelWithFunctions } from './llm'
 import { defaultQuestion } from './constants'
 import random from './idGenerator'
 
@@ -36,7 +36,7 @@ export const ask = async (input: string, source: SourceType, conversationId?: st
       chat_history: (i: any) => i.chat_history,
     },
     isMoby ? mobySystemPromptTemplate : gptSystemPromptTemplate,
-    modelWithFunctions,
+    isMoby ? modelWithFunctions : llm,
     new OpenAIFunctionsAgentOutputParser(),
   ])
 
