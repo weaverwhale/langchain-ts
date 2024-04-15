@@ -1,6 +1,6 @@
 import { ChatOpenAI } from '@langchain/openai'
 import { convertToOpenAIFunction } from '@langchain/core/utils/function_calling'
-import { tools } from './tools'
+import { tools, mobyTools } from './tools'
 import { model } from './constants'
 
 export const llm = new ChatOpenAI({
@@ -11,4 +11,8 @@ export const llm = new ChatOpenAI({
 
 export const modelWithFunctions = llm.bind({
   functions: tools.map((tool) => convertToOpenAIFunction(tool)),
+})
+
+export const mobyModelWithFunctions = llm.bind({
+  functions: mobyTools.map((tool) => convertToOpenAIFunction(tool)),
 })

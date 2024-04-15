@@ -32,10 +32,13 @@ const remoteHelpCenterPrompt = await langfuse.getPrompt('Help Center Prompt')
 const helpCenter = new DynamicTool({
   name: 'help_center',
   description: remoteHelpCenterPrompt.prompt ?? helpCenterPrompt,
-  func: async (question: string) => {
+  func: async (question: string, runManager, meta) => {
+    const sessionId = meta?.configurable?.sessionId
+
     const trace = langfuse.trace({
       name: 'help-center',
       input: JSON.stringify(question),
+      sessionId,
     })
 
     const generation = trace.generation({
@@ -106,20 +109,23 @@ const remoteMobyPrompt = await langfuse.getPrompt('Moby Prompt')
 const askMoby = new DynamicTool({
   name: 'ask_moby',
   description: remoteMobyPrompt.prompt ?? mobyPrompt,
-  func: async (question: string) => {
+  func: async (question: string, runManager, meta) => {
+    const sessionId = meta?.configurable?.sessionId
+
     const body = {
-      shopId,
       question,
       userId: null,
       messageId: null,
       stream: false,
       source: 'chat',
+      shopId: defaultShopId,
       generateInsights: 'false',
     }
 
     const trace = langfuse.trace({
       name: 'ask-moby',
       input: JSON.stringify(question),
+      sessionId,
     })
 
     const generation = trace.generation({
@@ -202,10 +208,13 @@ const askMoby = new DynamicTool({
 const WikipediaQuery = new DynamicTool({
   name: 'wikipedia',
   description: wikipediaPrompt,
-  func: async (question: string) => {
+  func: async (question: string, runManager, meta) => {
+    const sessionId = meta?.configurable?.sessionId
+
     const trace = langfuse.trace({
       name: 'wikipedia',
       input: JSON.stringify(question),
+      sessionId,
     })
 
     const generation = trace.generation({
@@ -259,4 +268,4 @@ export const tools = [
   new Calculator(),
 ]
 
-export const mobyTools = [...tools, helpCenter, askMoby]
+export const mobyTools = [helpCenter, askMoby, ...tools]
