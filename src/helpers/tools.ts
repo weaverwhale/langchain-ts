@@ -5,6 +5,7 @@ import { Calculator } from '@langchain/community/tools/calculator'
 import { DynamicTool } from '@langchain/community/tools/dynamic'
 import langfuse from './langfuse'
 import {
+  defaultShopId,
   genericSystemPrompt,
   mobySystemPrompt,
   helpCenterPrompt,
@@ -20,9 +21,10 @@ const generatePromptTemplate = (sentPrompt: string) =>
     new MessagesPlaceholder('agent_scratchpad'),
   ])
 
-export const shopId = 'trueclassictees-com.myshopify.com'
 const systemPrompt = await langfuse.getPrompt('Moby System Prompt')
-const compiledSystemPrompt = systemPrompt.prompt ? systemPrompt.prompt : mobySystemPrompt(shopId)
+const compiledSystemPrompt = systemPrompt.prompt
+  ? systemPrompt.prompt
+  : mobySystemPrompt(defaultShopId)
 export const mobySystemPromptTemplate = generatePromptTemplate(compiledSystemPrompt)
 export const gptSystemPromptTemplate = generatePromptTemplate(genericSystemPrompt)
 

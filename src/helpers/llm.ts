@@ -1,8 +1,8 @@
 import { ChatOpenAI } from '@langchain/openai'
 import { convertToOpenAIFunction } from '@langchain/core/utils/function_calling'
 import { tools } from './tools'
+import { model } from './constants'
 
-export const model = 'gpt-3.5-turbo-1106'
 export const llm = new ChatOpenAI({
   model,
   openAIApiKey: process.env.OPENAI_API_KEY,

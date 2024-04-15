@@ -1,8 +1,8 @@
 import langfuse from './langfuse'
 import { supabase } from './supabase'
 import { tools, mobyTools, mobySystemPromptTemplate, gptSystemPromptTemplate } from './tools'
-import { model, llm, modelWithFunctions } from './llm'
-import { defaultQuestion } from './constants'
+import { llm, modelWithFunctions } from './llm'
+import { model, defaultQuestion } from './constants'
 import random from './idGenerator'
 
 // langchain stuff
