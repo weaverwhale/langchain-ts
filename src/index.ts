@@ -1,7 +1,7 @@
 import express, { Request, Response } from 'express'
 import chalk from 'chalk'
 import * as dotenv from 'dotenv'
-import { ask } from './helpers/ask'
+import { askQuestion } from './helpers/ask'
 
 // -----------------------
 // data
@@ -29,9 +29,9 @@ app.post('/ask-gpt', async (req: Request, res: Response) => {
     })
 
   try {
-    const gptResponse = await ask(question, 'gpt', conversationId)
+    const answer = await askQuestion(question, 'gpt', conversationId)
     return res.json({
-      answer: gptResponse ?? 42,
+      answer: answer ?? 42,
     })
   } catch (e) {
     console.error(e)
@@ -51,9 +51,9 @@ app.post('/ask-moby', async (req: Request, res: Response) => {
     })
 
   try {
-    const mobyResponse = await ask(question, 'moby', conversationId)
+    const answer = await askQuestion(question, 'moby', conversationId)
     return res.json({
-      answer: mobyResponse ?? 42,
+      answer: answer ?? 42,
     })
   } catch (e) {
     console.error(e)

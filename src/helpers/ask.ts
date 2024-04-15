@@ -106,21 +106,21 @@ export const ask = async (input: string, source: sourceType, conversationId?: st
   }
 }
 
-export async function question(
+export async function askQuestion(
   input: string = defaultQuestion,
   source: sourceType,
   conversationId?: string,
 ): Promise<any> {
-  const sessionId = conversationId ?? random()
+  const sessionId = conversationId || random()
   const trace = langfuse.trace({
     name: `ask-${source}`,
     sessionId,
-    input: JSON.stringify(question),
+    input: JSON.stringify(input),
   })
 
   const generation = trace.generation({
     name: 'generation',
-    input: JSON.stringify(question),
+    input: JSON.stringify(input),
     model,
   })
 
