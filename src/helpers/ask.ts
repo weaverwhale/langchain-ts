@@ -44,7 +44,7 @@ export const ask = async (input: string, source: sourceType, conversationId?: st
 
   const executor = AgentExecutor.fromAgentAndTools({
     agent: runnableAgent,
-    tools: isMoby ? [] : tools,
+    tools: isMoby ? tools : [],
   })
   const invokee = await executor.invoke(
     {
