@@ -12,7 +12,11 @@ import { AIMessage, BaseMessage, HumanMessage } from '@langchain/core/messages'
 import { formatToOpenAIFunctionMessages } from 'langchain/agents/format_scratchpad'
 import { OpenAIFunctionsAgentOutputParser } from 'langchain/agents/openai/output_parser'
 
-export const ask = async (input: string, source: SourceType, conversationId?: string) => {
+export const ask = async (
+  input: string,
+  source: SourceType,
+  conversationId?: string,
+): Promise<AnswerResponse> => {
   const isMoby = source === 'moby'
   const { data } = await supabase
     .from('conversations')
@@ -74,7 +78,7 @@ export const ask = async (input: string, source: SourceType, conversationId?: st
     }
 
     return {
-      ...invokee,
+      ...(invokee as any),
       conversationId,
       source,
     }
@@ -97,7 +101,7 @@ export const ask = async (input: string, source: SourceType, conversationId?: st
     }
 
     return {
-      ...invokee,
+      ...(invokee as any),
       conversationId: newId,
       source,
     }
@@ -108,7 +112,7 @@ export async function askQuestion(
   input: string = defaultQuestion,
   source: SourceType,
   conversationId?: string,
-): Promise<any> {
+): Promise<AnswerResponse> {
   const sessionId = conversationId || random()
   const trace = langfuse.trace({
     name: `ask-${source}`,
@@ -129,12 +133,12 @@ export async function askQuestion(
   const response = await ask(input, source, sessionId)
 
   generation.end({
-    output: JSON.stringify(response),
+    output: JSON.stringify(response?.answer?.output ?? response),
     level: 'DEFAULT',
   })
 
   trace.update({
-    output: JSON.stringify(response),
+    output: JSON.stringify(response?.answer?.output ?? response),
   })
 
   await langfuse.shutdownAsync()

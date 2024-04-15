@@ -149,12 +149,12 @@ const askMoby = new DynamicTool({
         }
 
         generation.end({
-          output: JSON.stringify(data.data),
+          output: JSON.stringify(data.data?.answer?.output ?? data.data),
           level: 'DEFAULT',
         })
 
         trace.update({
-          output: JSON.stringify(data.data),
+          output: JSON.stringify(data.data?.answer?.output ?? data.data),
         })
 
         return preparedData
