@@ -12,18 +12,6 @@ import {
   wikipediaPrompt,
 } from './constants'
 
-export type HelpCenterLink = {
-  title: string
-  link: string
-}
-
-export type HelpCenterLinks = Record<string, HelpCenterLink>
-
-export type HelpCenterResponse = {
-  links: HelpCenterLinks
-  answer: string
-}
-
 const generatePromptTemplate = (sentPrompt: string) =>
   ChatPromptTemplate.fromMessages([
     ['system', sentPrompt],

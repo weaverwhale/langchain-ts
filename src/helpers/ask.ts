@@ -2,6 +2,7 @@ import langfuse from './langfuse'
 import { supabase } from './supabase'
 import { tools, mobySystemPromptTemplate, gptSystemPromptTemplate } from './tools'
 import { model, modelWithFunctions } from './llm'
+import { defaultQuestion } from './constants'
 import random from './idGenerator'
 
 // langchain stuff
@@ -11,10 +12,7 @@ import { AIMessage, BaseMessage, HumanMessage } from '@langchain/core/messages'
 import { formatToOpenAIFunctionMessages } from 'langchain/agents/format_scratchpad'
 import { OpenAIFunctionsAgentOutputParser } from 'langchain/agents/openai/output_parser'
 
-const defaultQuestion = 'Tell me about yourself'
-type sourceType = 'moby' | 'gpt'
-
-export const ask = async (input: string, source: sourceType, conversationId?: string) => {
+export const ask = async (input: string, source: SourceType, conversationId?: string) => {
   const isMoby = source === 'moby'
   const { data } = await supabase
     .from('conversations')
@@ -108,7 +106,7 @@ export const ask = async (input: string, source: sourceType, conversationId?: st
 
 export async function askQuestion(
   input: string = defaultQuestion,
-  source: sourceType,
+  source: SourceType,
   conversationId?: string,
 ): Promise<any> {
   const sessionId = conversationId || random()

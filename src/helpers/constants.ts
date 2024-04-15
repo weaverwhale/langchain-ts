@@ -38,3 +38,4 @@ Avoid asking predictive questions and ensure your inquiries are targeted.
 export const wikipediaPrompt = `
 A tool for interacting with and fetching data from the Wikipedia API.
 `
+export const defaultQuestion = 'Tell me about yourself'
