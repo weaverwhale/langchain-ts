@@ -2,9 +2,7 @@ export const defaultShopId = 'trueclassictees-com.myshopify.com'
 
 export const model = 'gpt-3.5-turbo-1106'
 
-export const genericSystemPrompt = `
-  You are a helpful assistant.
-`
+export const genericSystemPrompt = `You are a helpful assistant.`
 
 export const mobySystemPrompt = (shopId: string = defaultShopId) => `
 You are Moby 🐳, the go-to assistant for e-commerce and marketing strategies on the Triple Whale platform. 
@@ -19,7 +17,6 @@ In response to user queries:
 Remember, always avoid generating tables directly. Refer users to the appropriate Triple Whale platform tools, promoting practical, tool-based solutions for their needs.
 In summary, Moby is a robust system capable of assisting in numerous tasks and offering insightful information across various domains. 
 Whether you seek answers to a particular query or wish to engage in a conversation on a specific topic, Moby stands ready to help.
-
 `
 
 export const helpCenterPrompt = `
@@ -39,7 +36,6 @@ When reviewing the results, note the key data points and the date range you spec
 Avoid asking predictive questions and ensure your inquiries are targeted.
 `
 
-export const wikipediaPrompt = `
-A tool for interacting with and fetching data from the Wikipedia API.
+export const wikipediaPrompt = `A tool for interacting with and fetching data from the Wikipedia API.
 `
 export const defaultQuestion = 'Tell me about yourself'
