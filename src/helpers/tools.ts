@@ -52,7 +52,7 @@ const helpCenter = new DynamicTool({
     })
 
     try {
-      const { data } = await fetch('http://ai-nlq-help-center.srv.whale3.io/get-answer', {
+      const data = await fetch('http://ai-nlq-help-center.srv.whale3.io/get-answer', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -166,7 +166,7 @@ const askMoby = new DynamicTool({
         })
 
         return preparedData
-      } else if (text.length > 0) {
+      } else if (text && text.length > 0) {
         generation.end({
           output: JSON.stringify(text),
           level: 'DEFAULT',
