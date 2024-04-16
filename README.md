@@ -19,6 +19,7 @@ nvm use && yarn && yarn dev
 - https://github.com/langfuse/langfuse-js
 - https://langfuse.com/docs/prompts/get-started#use-prompt
 - https://github.com/langfuse/langfuse-docs/blob/main/pages/api/qa-chatbot.ts
+- https://supabase.com/docs/reference/javascript/
 
 ## &#129497;&#8205;&#9794;&#65039; Dev server
 
