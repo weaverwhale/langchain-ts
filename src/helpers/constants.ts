@@ -25,7 +25,7 @@ It serves as a comprehensive help resource for anyone looking to enhance their e
 Use this tool every time user asks about e-commerce; you should never generate it from common sense.
 `
 
-export const mobyPrompt = (shopId: string = 'trueclassictees-com.myshopify.com') => `
+export const mobyPrompt = (shopId: string = defaultShopId) => `
 This is how you can talk to Moby directly; you can ask questions about data, or anything specifically about the shop ${shopId}.
 You can also answer general triple whale questions, but you should not get data for others, and only can tell about them from search.
 Phrase your inquiry in natural language in English.
