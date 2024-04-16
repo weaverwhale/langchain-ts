@@ -28,10 +28,12 @@ const compiledSystemPrompt = systemPrompt.prompt
 export const mobySystemPromptTemplate = generatePromptTemplate(compiledSystemPrompt)
 export const gptSystemPromptTemplate = generatePromptTemplate(genericSystemPrompt)
 
-const remoteHelpCenterPrompt = await langfuse.getPrompt('Help Center Prompt')
+const remoteHelpCenterPrompt = await (
+  await langfuse.getPrompt('Help Center Prompt')
+).compile({ shopId: defaultShopId })
 const helpCenter = new DynamicTool({
   name: 'help_center',
-  description: remoteHelpCenterPrompt.prompt ?? helpCenterPrompt,
+  description: remoteHelpCenterPrompt ?? helpCenterPrompt,
   func: async (question: string, runManager, meta) => {
     const sessionId = meta?.configurable?.sessionId
 
@@ -105,12 +107,15 @@ const helpCenter = new DynamicTool({
   },
 })
 
-const remoteMobyPrompt = await langfuse.getPrompt('Moby Prompt')
+const remoteMobyPrompt = await (
+  await langfuse.getPrompt('Moby Prompt')
+).compile({ shopId: defaultShopId })
 const askMoby = new DynamicTool({
   name: 'ask_moby',
-  description: remoteMobyPrompt.prompt ?? mobyPrompt,
+  description: remoteMobyPrompt ?? mobyPrompt,
   func: async (question: string, runManager, meta) => {
     const sessionId = meta?.configurable?.sessionId
+    const shopId = meta?.configurable?.shopId
 
     const body = {
       question,
@@ -118,7 +123,7 @@ const askMoby = new DynamicTool({
       messageId: null,
       stream: false,
       source: 'chat',
-      shopId: defaultShopId,
+      shopId: shopId,
       generateInsights: 'false',
     }
 

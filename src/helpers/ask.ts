@@ -2,7 +2,7 @@ import langfuse from './langfuse'
 import { supabase } from './supabase'
 import { tools, mobyTools, mobySystemPromptTemplate, gptSystemPromptTemplate } from './tools'
 import { modelWithFunctions, mobyModelWithFunctions } from './llm'
-import { model, defaultQuestion } from './constants'
+import { model, defaultQuestion, defaultShopId } from './constants'
 import random from './idGenerator'
 
 // langchain stuff
@@ -54,7 +54,7 @@ export const ask = async (
       chat_history: chatHistory,
     },
     {
-      configurable: { sessionId: conversationId },
+      configurable: { sessionId: conversationId, shopId: defaultShopId },
     },
   )
 
@@ -109,8 +109,8 @@ export async function askQuestion(
   const sessionId = conversationId || random()
   const trace = langfuse.trace({
     name: `ask-${source}`,
-    sessionId,
     input: JSON.stringify(input),
+    sessionId,
   })
 
   const generation = trace.generation({
