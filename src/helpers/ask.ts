@@ -113,22 +113,7 @@ export async function askQuestion(
     sessionId,
   })
 
-  const generation = trace.generation({
-    name: 'generation',
-    input: JSON.stringify(input),
-    model,
-  })
-
-  generation.update({
-    completionStartTime: new Date(),
-  })
-
   const response = await ask(input, source, sessionId)
-
-  generation.end({
-    output: JSON.stringify(response?.output ?? response),
-    level: 'DEFAULT',
-  })
 
   trace.update({
     output: JSON.stringify(response?.output ?? response),

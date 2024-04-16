@@ -44,7 +44,7 @@ const helpCenter = new DynamicTool({
     })
 
     const generation = trace.generation({
-      name: 'generation',
+      name: 'help-center',
       input: JSON.stringify(question),
       model: 'triple-whale-help-center',
     })
@@ -134,7 +134,7 @@ const askMoby = new DynamicTool({
     })
 
     const generation = trace.generation({
-      name: 'generation',
+      name: 'ask-moby',
       input: JSON.stringify(question),
       model: 'moby',
     })
@@ -223,7 +223,7 @@ const WikipediaQuery = new DynamicTool({
     })
 
     const generation = trace.generation({
-      name: 'generation',
+      name: 'wikipedia',
       input: JSON.stringify(question),
       model: 'wikipedia',
     })
