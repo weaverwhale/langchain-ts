@@ -120,7 +120,7 @@ const askMoby = new DynamicTool({
     const body = {
       question,
       userId: null,
-      messageId: null,
+      conversationId: sessionId,
       stream: false,
       source: 'chat',
       shopId: shopId,
