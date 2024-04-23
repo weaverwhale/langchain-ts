@@ -67,8 +67,8 @@ Provide the response in HTML format.
 
 Here is the format I would like you to use:
 
-<p><i>NAME<i> is <strong>UP</strong> 🟢</p>
-<p><i>NAME<i> is <strong>DOWN</strong> 🔴</p>
+<p><i>NAME</i> is <strong>UP</strong> 🟢</p>
+<p><i>NAME</i> is <strong>DOWN</strong> 🔴</p>
 
 For each service, provide the status of the service.
 Replace NAME with the name of the service.
@@ -123,15 +123,21 @@ export const statusUrls = [
     url: `http://pixel.srv.whale3.io/health`,
   },
   {
-    title: 'Summary Page',
-    url: `http://summary-page.srv.whale3.io/get-data`,
+    title: 'Compare Stats (Summary)',
+    url: `http://summary-page.srv.whale3.io/compare-stats`,
     body: {
-      shopDomain: defaultShopId ?? '',
-      period: {
-        startDate: '2024-01-01',
-        endDate: '2024-01-01',
-      },
+      groupStatsBy: 'hour',
+      includeCalculatedStats: false,
+      includeCharts: false,
+      includeRawStats: false,
+      key: '2024-04-23T00:00:00-04:002024-04-23T23:59:59-04:00',
+      periods: [{ start: '2024-04-23T00:00:00-04:00', end: '2024-04-23T23:59:59-04:00' }],
+      shopDomain: defaultShopId,
+      supportSummaryNexus: false,
       todayHour: 24,
+      todayHourSubtractForPrevPeriod: true,
+      useNexus: true,
+      useOrdersNexus: false,
     },
   },
 ]
