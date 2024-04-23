@@ -67,8 +67,8 @@ Provide the response in HTML format.
 
 Here is the format I would like you to use:
 
-<p><i>NAME</i> is <strong>UP</strong> 🟢</p>
-<p><i>NAME</i> is <strong>DOWN</strong> 🔴</p>
+<p>🟢 <strong>NAME</strong></p>
+<p>🔴 <strong>NAME</strong></p>
 
 For each service, provide the status of the service.
 Replace NAME with the name of the service.
