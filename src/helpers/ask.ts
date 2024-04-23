@@ -141,6 +141,9 @@ export async function askQuestion(
     name: `ask-${source}`,
     input: JSON.stringify(input),
     sessionId,
+    metadata: {
+      source,
+    },
   })
 
   const response = await ask(input, source, sessionId)

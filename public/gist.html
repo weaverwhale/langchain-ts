@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>🐳 Gist</title>
+    <style>
+      pre {
+        display: inline;
+      }
+      #app {
+        margin: 0 auto;
+        width: 80%;
+        max-width: 500px;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div id="app">
+      <h1>🐳 Gist</h1>
+      <p>Provides the gist of a provided URL, or data object.</p>
+      <div>
+        You can post to
+        <pre>/get-gist</pre>
+        with an object containing a
+        <pre>data</pre>
+        object, or
+        <pre>url</pre>
+        string to fetch.
+      </div>
+      <p>
+        <a target="_blank" href="https://github.com/weaverwhale/langchain-ts">Github</a> |
+        <a target="_blank" href="https://langchain-ts.onrender.com/">Live demo</a>
+      </p>
+      <div id="answer">
+        <h2>
+          Asking it to explain the
+          <pre>constants.ts</pre>
+          file
+        </h2>
+        <p>Please be patient; he usually takes 5-10 seconds to reply.</p>
+      </div>
+    </div>
+  </body>
+
+  <script>
+    const app = document.getElementById('app')
+    fetch('/get-gist', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        url: 'https://raw.githubusercontent.com/weaverwhale/langchain-ts/main/src/helpers/constants.ts',
+      }),
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        try {
+          const parsedData = JSON.parse(JSON.stringify(data))
+          console.log(parsedData)
+          document.getElementById(
+            'answer',
+          ).innerHTML = `<h2>Gist of <pre>constants.ts</pre></h2>${parsedData.answer.output}`
+        } catch {}
+      })
+  </script>
+</html>
