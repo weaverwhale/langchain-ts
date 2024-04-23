@@ -6,9 +6,9 @@ export const handler = async (req: Request, res: Response, context: SourceType) 
   const conversationId = req.body?.conversationId?.toString().trim() ?? null
   const url = req.body?.url?.trim() ?? null
   const data = req.body?.data ?? null
-  let input = req.body?.question?.trim() ?? ''
+  let input = req.body?.question?.trim() ?? null
 
-  if (input.length <= 0 && url.length <= 0 && data.length <= 0 && context !== 'status')
+  if (input?.length <= 0 && url?.length <= 0 && data?.length <= 0 && context !== 'status')
     return res.json({
       code: 403,
       message: 'Please provide a question, data, or a url to fetch',
