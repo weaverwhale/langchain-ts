@@ -46,9 +46,15 @@
         try {
           const parsedData = JSON.parse(JSON.stringify(data))
           console.log(parsedData)
-          document.getElementById(
-            'answer',
-          ).innerHTML = `<h2>Triple Whale Status</h2>${parsedData.answer.output}`
+          document.getElementById('answer').innerHTML = `<h2>Triple Whale Status</h2>${
+            parsedData.answer.output
+          }${
+            parsedData.isCached
+              ? `<p><i>Cached ${parseInt(
+                  Math.abs((new Date() - new Date(parsedData.cacheTime)) / 60000),
+                )} minutes ago</i></p>`
+              : ''
+          }`
         } catch {}
       })
   </script>
