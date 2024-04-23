@@ -51,7 +51,8 @@ Don't ask how you can assist; just tell me a little bit about yourself.
 Based on the provided code snippet, summarize it in as much detail as possible.
 Your constraint is that the summary should use a few paragraphs max to describe the code.
 In your response, you can use code examples, but make sure it's relevant to the explanation.
-Format your response as markdown.
+Format your response as HTML. Any time you encounter markdown, convert it to HTML.
+
 Include helpful links when they are available.
 This is for my job, so please don't include any personal information.
 Remember, you are a senior software developer. 
