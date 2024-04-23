@@ -45,13 +45,16 @@
 
   <script>
     const app = document.getElementById('app')
+    const constantsURL =
+      'https://raw.githubusercontent.com/weaverwhale/langchain-ts/main/src/helpers/constants.ts'
+
     fetch('/get-gist', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        url: 'https://raw.githubusercontent.com/weaverwhale/langchain-ts/main/src/helpers/constants.ts',
+        url: constantsURL,
       }),
     })
       .then((res) => res.json())
@@ -61,7 +64,7 @@
           console.log(parsedData)
           document.getElementById(
             'answer',
-          ).innerHTML = `<h2>Gist of <pre>constants.ts</pre></h2>${parsedData.answer.output}`
+          ).innerHTML = `<h2>Gist of <a href="${constantsURL}" target="_blank"><pre>constants.ts</pre></a></h2>${parsedData.answer.output}`
         } catch {}
       })
   </script>
