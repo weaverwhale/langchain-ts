@@ -1,6 +1,7 @@
 export const defaultShopId = 'trueclassictees-com.myshopify.com'
 
-export const model = 'gpt-3.5-turbo-1106'
+export const threeModel = 'gpt-3.5-turbo-1106'
+export const fourModel = 'gpt-4-turbo'
 
 export const genericSystemPrompt = `You are a helpful assistant.`
 
@@ -39,3 +40,98 @@ Avoid asking predictive questions and ensure your inquiries are targeted.
 export const wikipediaPrompt = `A tool for interacting with and fetching data from the Wikipedia API.
 `
 export const defaultQuestion = 'Tell me about yourself'
+
+export const gistSystemPrompt = `
+You are a helpful assistant for a senior software developer.
+You can read and write multiple coding languages, but primarily use TypeScript.
+Your goal is to accept snippets of code, and return a summary of it.
+If anyone asks you about yourself, pretend you are a senior software developer.
+Don't ask how you can assist; just tell me a little bit about yourself.
+
+Based on the provided code snippet, summarize it in as much detail as possible.
+Your constraint is that the summary should use a few paragraphs max to describe the code.
+In your response, you can use code examples, but make sure it's relevant to the explanation.
+Format your response as markdown.
+Include helpful links when they are available.
+This is for my job, so please don't include any personal information.
+Remember, you are a senior software developer. 
+Don't ask how you can assist; just do the best you can.
+`
+
+export const statusSystemPrompt = `
+You are a helpful assistant for a devOps engineer.
+Your job is to take in a JSON object and return a summary of the status of the system.
+If anyone asks you about yourself, pretend you are a devOps engineer.
+Don't ask how you can assist; just provide this information.
+Provide the response in HTML format.
+
+Here is the format I would like you to use:
+
+<p><i>NAME<i> is <strong>UP</strong> 🟢</p>
+<p><i>NAME<i> is <strong>DOWN</strong> 🔴</p>
+
+For each service, provide the status of the service.
+Replace NAME with the name of the service.
+If the status is up, use the green circle emoji.
+If the status is down, use the red circle emoji.
+You will find the data in the JSON I provide.
+
+Then, provide a summary of the status of the system.
+Try to keep the summary to a few sentences.
+Remember, you are a devOps engineer.
+Be confident, you know what you are doing.
+`
+export const defaultHeaders = {
+  'Content-Type': 'application/json',
+  Authorization: `Bearer ${process.env.TW_IDENTITY_TOKEN}`,
+}
+
+export const statusUrls = [
+  {
+    title: 'Client Application',
+    url: 'https://app.triplewhale.com',
+    body: null,
+  },
+  {
+    title: 'Public Website',
+    url: 'https://triplewhale.com',
+    body: null,
+  },
+  {
+    title: 'Willy Chat',
+    url: 'http://willy.srv.whale3.io/answer-nlq-question',
+    body: {
+      shopId: defaultShopId,
+      query: 'What is the average order value for the last 30 days?',
+      messageId: null,
+      stream: false,
+      source: 'chat',
+      generateInsights: true,
+    },
+  },
+  {
+    title: 'Attribution',
+    url: 'http://attribution.srv.whale3.io/get-orders-with-journeys-v2',
+    body: {
+      shop: defaultShopId,
+      startDate: '2024-01-01',
+      endDate: '2024-01-01',
+    },
+  },
+  {
+    title: 'Pixel',
+    url: `http://pixel.srv.whale3.io/health`,
+  },
+  {
+    title: 'Summary Page',
+    url: `http://summary-page.srv.whale3.io/get-data`,
+    body: {
+      shopDomain: defaultShopId ?? '',
+      period: {
+        startDate: '2024-01-01',
+        endDate: '2024-01-01',
+      },
+      todayHour: 24,
+    },
+  },
+]

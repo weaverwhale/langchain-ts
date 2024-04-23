@@ -1,8 +1,14 @@
 import langfuse from './langfuse'
 import { supabase } from './supabase'
-import { tools, mobyTools, mobySystemPromptTemplate, gptSystemPromptTemplate } from './tools'
-import { modelWithFunctions, mobyModelWithFunctions } from './llm'
-import { model, defaultQuestion, defaultShopId } from './constants'
+import {
+  tools,
+  mobyTools,
+  mobySystemPromptTemplate,
+  gptSystemPromptTemplate,
+  gistSystemPromptTemplate,
+} from './tools'
+import { modelWithFunctions, mobyModelWithFunctions, newModelWithFunctions } from './llm'
+import { defaultQuestion, defaultShopId } from './constants'
 import random from './idGenerator'
 
 // langchain stuff
@@ -11,13 +17,37 @@ import { AgentExecutor, type AgentStep } from 'langchain/agents'
 import { AIMessage, BaseMessage, HumanMessage } from '@langchain/core/messages'
 import { formatToOpenAIFunctionMessages } from 'langchain/agents/format_scratchpad'
 import { OpenAIFunctionsAgentOutputParser } from 'langchain/agents/openai/output_parser'
+import { statusSystemPromptTemplate } from './tools'
 
 export const ask = async (
   input: string,
   source: SourceType,
   conversationId?: string,
 ): Promise<Answer> => {
+  console.log(
+    `[${conversationId ?? 'new convo'}] Asking ${source} question: ${JSON.stringify(
+      input,
+    ).substring(0, 100)}`,
+  )
+
   const isMoby = source === 'moby'
+  const isGist = source === 'gist'
+  const isStatus = source === 'status'
+
+  const currentPromptTemplate = isStatus
+    ? statusSystemPromptTemplate
+    : isGist
+    ? gistSystemPromptTemplate
+    : isMoby
+    ? mobySystemPromptTemplate
+    : gptSystemPromptTemplate
+  const currentModelWithFunctions =
+    isStatus || isGist
+      ? newModelWithFunctions
+      : isMoby
+      ? mobyModelWithFunctions
+      : modelWithFunctions
+
   const { data } = await supabase
     .from('conversations')
     .select('*')
@@ -39,8 +69,8 @@ export const ask = async (
         formatToOpenAIFunctionMessages(i.steps),
       chat_history: (i: any) => i.chat_history,
     },
-    isMoby ? mobySystemPromptTemplate : gptSystemPromptTemplate,
-    isMoby ? mobyModelWithFunctions : modelWithFunctions,
+    currentPromptTemplate,
+    currentModelWithFunctions,
     new OpenAIFunctionsAgentOutputParser(),
   ])
 

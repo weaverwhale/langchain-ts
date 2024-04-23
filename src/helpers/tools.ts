@@ -11,6 +11,8 @@ import {
   helpCenterPrompt,
   mobyPrompt,
   wikipediaPrompt,
+  gistSystemPrompt,
+  statusSystemPrompt,
 } from './constants'
 
 const generatePromptTemplate = (sentPrompt: string) =>
@@ -27,6 +29,8 @@ const compiledSystemPrompt = systemPrompt.prompt
   : mobySystemPrompt(defaultShopId)
 export const mobySystemPromptTemplate = generatePromptTemplate(compiledSystemPrompt)
 export const gptSystemPromptTemplate = generatePromptTemplate(genericSystemPrompt)
+export const gistSystemPromptTemplate = generatePromptTemplate(gistSystemPrompt)
+export const statusSystemPromptTemplate = generatePromptTemplate(statusSystemPrompt)
 
 const remoteHelpCenterPrompt = await (
   await langfuse.getPrompt('Help Center Prompt')

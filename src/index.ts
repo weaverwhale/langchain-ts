@@ -22,6 +22,8 @@ app.use(express.json())
 // -----------------------
 app.post('/ask-gpt', (req: Request, res: Response) => handler(req, res, 'gpt'))
 app.post('/ask-moby', (req: Request, res: Response) => handler(req, res, 'moby'))
+app.post('/get-gist', (req: Request, res: Response) => handler(req, res, 'gist'))
+app.post('/get-status', (req: Request, res: Response) => handler(req, res, 'status'))
 
 // -----------------------
 // static
