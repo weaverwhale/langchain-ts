@@ -44,7 +44,7 @@ export const handler = async (req: Request, res: Response, context: SourceType) 
         return res.status(500).send(e)
       }
     }
-  } else if (data.length > 0) {
+  } else if (data?.length > 0) {
     input = JSON.stringify(data)
   }
 
