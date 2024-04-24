@@ -2,8 +2,7 @@ import express, { Request, Response } from 'express'
 import chalk from 'chalk'
 import * as dotenv from 'dotenv'
 import handler from './helpers/handler'
-import { hydrateStatus } from './helpers/status'
-import { FIVE_MINUTES } from './helpers/constants'
+import crons from './helpers/crons'
 
 // -----------------------
 // data
@@ -35,7 +34,7 @@ app.use(express.static('public', { extensions: ['html'] }))
 // -----------------------
 // CRONS
 // -----------------------
-setInterval(hydrateStatus, FIVE_MINUTES * 12)
+crons()
 
 // -----------------------
 // logger

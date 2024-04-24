@@ -39,7 +39,7 @@ Avoid asking predictive questions and ensure your inquiries are targeted.
 
 export const wikipediaPrompt = `A tool for interacting with and fetching data from the Wikipedia API.
 `
-export const defaultQuestion = 'Tell me about yourself'
+export const defaultQuestion = 'Tell me a bit about yourself'
 
 export const gistSystemPrompt = `
 You are a helpful assistant for a senior software developer.
@@ -68,16 +68,21 @@ Provide the response in HTML format.
 
 Here is the format I would like you to use:
 
-<p>🟢 <strong>NAME</strong></p>
-<p>🔴 <strong>NAME</strong></p>
+If all services are up, please provide a header that indicates all services are operational before listing the services.
+
+<p>✅ <strong>NAME</strong></p>
+<p>⚠️ <strong>NAME</strong></p>
 
 For each service, provide the status of the service.
 Replace NAME with the name of the service.
 If the status is up, use the green circle emoji.
 If the status is down, use the red circle emoji.
 You will find the data in the JSON I provide.
+If the status is down, provide a brief description of the issue based on the info field in the JSON.
 
-Then, provide a summary of the status of the system.
+Wrap all the services in a div tag with the ID of "services". No other elements should be in this div.
+
+After the services, provide a summary of the status of the system.
 Try to keep the summary to a few sentences.
 The summary should be worded to the users of triple whale, not to the devOps team.
 We want to keep them informed, but not overwhelmed with technical details.
