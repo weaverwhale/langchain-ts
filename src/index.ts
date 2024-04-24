@@ -30,7 +30,7 @@ app.post('/get-status', (req: Request, res: Response) => handler(req, res, 'stat
 // -----------------------
 // static
 // -----------------------
-app.use(express.static('public'))
+app.use(express.static('public', { extensions: ['html'] }))
 
 // -----------------------
 // CRONS
