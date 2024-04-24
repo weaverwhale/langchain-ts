@@ -101,7 +101,7 @@ export const statusUrls = [
     body: null,
   },
   {
-    title: 'Willy Chat',
+    title: 'Moby (Chat)',
     url: 'http://willy.srv.whale3.io/answer-nlq-question',
     body: {
       shopId: defaultShopId,
