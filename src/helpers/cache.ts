@@ -8,7 +8,7 @@ export const getCache = async (context: string, time: number, question?: any) =>
       .from('caches')
       .select('*')
       .eq('context', context)
-      .gte('time', time - FIVE_MINUTES)
+      // .gte('time', time - FIVE_MINUTES)
       .order('time', { ascending: false })
     return data
   } else {
