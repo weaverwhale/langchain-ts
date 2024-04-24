@@ -22,20 +22,27 @@ const isUp = async (url: string, headers?: Record<string, string>, body?: any) =
 }
 
 export const getStatus = async () => {
-  const results = await Promise.all(
-    statusUrls.map(async ({ title, url, body }) => {
-      const { status, info } = await isUp(url, defaultHeaders, body)
+  try {
+    const results = await Promise.all(
+      statusUrls.map(async ({ title, url, body }) => {
+        const { status, info } = await isUp(url, defaultHeaders, body)
 
-      return {
-        status,
-        info,
-        title,
-        url,
-      }
-    }),
-  )
+        return {
+          status,
+          info,
+          title,
+          url,
+        }
+      }),
+    )
 
-  return {
-    results,
+    return {
+      results,
+    }
+  } catch (error) {
+    return {
+      status: false,
+      info: error,
+    }
   }
 }
