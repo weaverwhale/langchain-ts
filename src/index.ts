@@ -35,7 +35,7 @@ app.use(express.static('public', { extensions: ['html'] }))
 // -----------------------
 // CRONS
 // -----------------------
-setInterval(hydrateStatus, FIVE_MINUTES / 2)
+setInterval(hydrateStatus, FIVE_MINUTES * 12)
 
 // -----------------------
 // logger
