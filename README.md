@@ -32,3 +32,28 @@ yarn dev
 ```bash
 yarn start
 ```
+
+## 🐋 Docker
+
+We have included `Dockerfile` and `docker.compose`, which should enable you to host this app in a Docker container.
+
+You can build and run the Docker image with the following commands:
+
+```bash
+# Build the image
+yarn docker:build
+
+# Run the image
+yarn docker:compose
+```
+
+### ☁️ GCP Cloud Run
+
+We have also included a `cloudbuild.yaml` file, which should enable you to host this app on GCP Cloud Run.
+
+You can build and run the Cloud Run image with the following commands:
+
+```bash
+# Build and deploy
+gcloud run deploy
+```
