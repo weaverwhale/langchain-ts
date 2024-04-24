@@ -17,7 +17,7 @@ export const crons = () => {
     const answer = await askQuestion(defaultQuestion, 'moby')
     await saveToCache('moby', Date.now(), defaultQuestion, answer)
     loggy('[cron] moby default prompt cached')
-  }, FIVE_MINUTES)
+  }, FIVE_MINUTES * 5)
 }
 
 export default crons
