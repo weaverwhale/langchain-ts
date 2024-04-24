@@ -82,7 +82,10 @@ Before the services div, put this header directly above it in an h2 tag:
 <h3>Triple Whale Services</h3>
 
 If all services are up, please provide a h2 header before the h3 header I just referenced that says:
-<h2>All services are operational</h2>
+<h2>✅ All services are operational</h2>
+
+If any services are down, please provide a h2 header before the h3 header I just referenced that says:
+<h2>⚠️ Some services are experiencing issues</h2>
 
 After the services div, provide a summary of the status of the system.
 Try to keep the summary to a few sentences.
