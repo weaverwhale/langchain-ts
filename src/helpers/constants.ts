@@ -1,4 +1,4 @@
-export const defaultShopId = 'trueclassictees-com.myshopify.com'
+export const defaultShopId = 'madisonbraids.myshopify.com'
 
 export const threeModel = 'gpt-3.5-turbo-1106'
 export const fourModel = 'gpt-4-turbo'
@@ -123,7 +123,7 @@ export const statusUrls = [
   },
   {
     title: 'Pixel',
-    url: `http://pixel.srv.whale3.io/health`,
+    url: `http://pixel.srv.whale3.io/ping`,
   },
   {
     title: 'Compare Stats (Summary)',
@@ -145,7 +145,7 @@ export const statusUrls = [
   },
   {
     title: 'CDP',
-    url: `http://cdp.srv.whale3.io/get-segments-for-shop/madisonbraids.myshopify.com`,
+    url: `http://cdp.srv.whale3.io/get-segments-for-shop/${defaultShopId}`,
   },
   {
     title: 'CAPI',

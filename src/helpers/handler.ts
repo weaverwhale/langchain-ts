@@ -8,6 +8,7 @@ export const handler = async (req: Request, res: Response, context: SourceType) 
   const url = req.body?.url?.trim() ?? null
   const data = req.body?.data ?? null
   let input = req.body?.question?.trim() ?? null
+  const nocache = req.body?.nocache ?? req.query?.nocache === 'true' ?? false
 
   const isStatus = context === 'status'
   const currentTime = Date.now()
@@ -19,15 +20,17 @@ export const handler = async (req: Request, res: Response, context: SourceType) 
       error: true,
     })
 
-  const cachedData = await getCache(context, currentTime, isStatus ? null : input)
-  const latestCacheHit = cachedData?.[0]
+  if (!nocache) {
+    const cachedData = await getCache(context, currentTime, isStatus ? null : input)
+    const latestCacheHit = cachedData?.[0]
 
-  if (latestCacheHit && latestCacheHit.answer) {
-    console.log(`Cache hit for ${context}`)
-    return res.json({
-      ...latestCacheHit,
-      isCached: true,
-    })
+    if (latestCacheHit && latestCacheHit.answer) {
+      console.log(`Cache hit for ${context}`)
+      return res.json({
+        ...latestCacheHit,
+        isCached: true,
+      })
+    }
   }
 
   if (url) {

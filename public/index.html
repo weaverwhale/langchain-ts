@@ -40,7 +40,7 @@
 
   <script>
     const app = document.getElementById('app')
-    fetch('/ask-moby', {
+    fetch(`/ask-moby${window.location.search}`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

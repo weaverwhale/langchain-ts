@@ -36,7 +36,7 @@
 
   <script>
     const app = document.getElementById('app')
-    fetch('/get-status', {
+    fetch(`/get-status${window.location.search}`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

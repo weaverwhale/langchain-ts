@@ -49,7 +49,7 @@
     const constantsURL =
       'https://raw.githubusercontent.com/weaverwhale/langchain-ts/main/src/helpers/constants.ts'
 
-    fetch('/get-gist', {
+    fetch(`/get-gist${window.location.search}`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
