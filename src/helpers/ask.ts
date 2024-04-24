@@ -25,11 +25,7 @@ export const ask = async (
   source: SourceType,
   conversationId?: string,
 ): Promise<Answer> => {
-  loggy(
-    `[${conversationId ?? 'new convo'}] Asking ${source} question: ${JSON.stringify(
-      input,
-    ).substring(0, 100)}`,
-  )
+  loggy(`[${source}] Asking: ${JSON.stringify(input).substring(0, 100)}`)
 
   const isMoby = source === 'moby'
   const isGist = source === 'gist'
@@ -105,7 +101,7 @@ export const ask = async (
       .eq('id', conversationId)
 
     if (error) {
-      console.error(error)
+      loggy(error.message, true)
     }
   } else {
     const { error } = await supabase.from('conversations').upsert({
@@ -119,7 +115,7 @@ export const ask = async (
     })
 
     if (error) {
-      console.error(error)
+      loggy(error.message, true)
     }
   }
 

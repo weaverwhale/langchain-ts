@@ -38,9 +38,9 @@ export const saveToCache = async (
       })
 
       if (error) {
-        console.error(error)
+        loggy(error.message, true)
       } else {
-        loggy('Cached question/answer', false, true)
+        loggy(`[${context}] Cached question/answer`, false, true)
       }
     } catch {}
   }

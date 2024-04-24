@@ -94,7 +94,7 @@ const helpCenter = new DynamicTool({
         return output
       }
     } catch (error) {
-      console.error('Error in helpCenter', error)
+      loggy('Error in helpCenter', true)
 
       generation.end({
         output: JSON.stringify(error),

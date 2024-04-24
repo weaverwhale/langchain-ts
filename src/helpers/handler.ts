@@ -11,6 +11,8 @@ export const handler = async (req: Request, res: Response, context: SourceType) 
   let input = req.body?.question?.trim() ?? null
   const nocache = req.body?.nocache ?? req.query?.nocache === 'true' ?? false
 
+  loggy(`[${context}] ${input?.toString().substring(0, 50) ?? 'hit handler'}`, false)
+
   const isStatus = context === 'status'
   const currentTime = Date.now()
 
@@ -26,7 +28,7 @@ export const handler = async (req: Request, res: Response, context: SourceType) 
     const latestCacheHit = cachedData?.[0]
 
     if (latestCacheHit && latestCacheHit.answer) {
-      loggy(`Cache hit for ${context}`, false, true)
+      loggy(`[${context}] cache hit`, false, true)
       return res.json({
         ...latestCacheHit,
         isCached: true,

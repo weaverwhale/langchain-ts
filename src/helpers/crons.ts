@@ -10,13 +10,13 @@ export const crons = () => {
     const question = await getStatus().then((res) => JSON.stringify(res))
     const answer = await askQuestion(question, 'status')
     await saveToCache('status', Date.now(), question, answer)
-    loggy('cached status from cron')
+    loggy('[cron] TW status cached')
   }, FIVE_MINUTES)
   // moby
   setInterval(async () => {
     const answer = await askQuestion(defaultQuestion, 'moby')
     await saveToCache('moby', Date.now(), defaultQuestion, answer)
-    loggy('cached moby default prompt from cron')
+    loggy('[cron] moby default prompt cached')
   }, FIVE_MINUTES)
 }
 
