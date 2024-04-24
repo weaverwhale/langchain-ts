@@ -40,7 +40,7 @@ export const saveToCache = async (
       if (error) {
         console.error(error)
       } else {
-        loggy('Cached question/answer')
+        loggy('Cached question/answer', false, true)
       }
     } catch {}
   }

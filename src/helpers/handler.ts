@@ -2,6 +2,7 @@ import { Request, Response } from 'express'
 import { askQuestion } from './ask'
 import { getStatus } from './status'
 import { getCache, saveToCache } from './cache'
+import loggy from './loggy'
 
 export const handler = async (req: Request, res: Response, context: SourceType) => {
   const conversationId = req.body?.conversationId?.toString().trim() ?? null
@@ -25,7 +26,7 @@ export const handler = async (req: Request, res: Response, context: SourceType) 
     const latestCacheHit = cachedData?.[0]
 
     if (latestCacheHit && latestCacheHit.answer) {
-      console.log(`Cache hit for ${context}`)
+      loggy(`Cache hit for ${context}`, false, true)
       return res.json({
         ...latestCacheHit,
         isCached: true,

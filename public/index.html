@@ -14,7 +14,6 @@
     </nav>
     <div id="app">
       <h1>System Status</h1>
-      <p>Provides the status of various Triple Whale services.</p>
       <div id="answer">
         <h2>Fetching Services..</h2>
         <p>Please be patient; sometimes he takes 5-10 seconds to reply.</p>
@@ -35,9 +34,7 @@
         try {
           const parsedData = JSON.parse(JSON.stringify(data))
           console.log(parsedData)
-          document.getElementById('answer').innerHTML = `<h2>Triple Whale Services</h2>${
-            parsedData.answer.output
-          }${
+          document.getElementById('answer').innerHTML = `${parsedData.answer.output}${
             parsedData.isCached
               ? `<p><i>Last updated ${parseInt(
                   Math.abs((new Date() - new Date(parseInt(parsedData.time))) / 60000),

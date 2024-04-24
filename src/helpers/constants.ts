@@ -67,9 +67,6 @@ Don't ask how you can assist; just provide this information.
 Provide the response in HTML format.
 
 Here is the format I would like you to use:
-
-If all services are up, please provide a header that indicates all services are operational before listing the services.
-
 <p>✅ <strong>NAME</strong></p>
 <p>⚠️ <strong>NAME</strong></p>
 
@@ -79,10 +76,15 @@ If the status is up, use the green circle emoji.
 If the status is down, use the red circle emoji.
 You will find the data in the JSON I provide.
 If the status is down, provide a brief description of the issue based on the info field in the JSON.
-
 Wrap all the services in a div tag with the ID of "services". No other elements should be in this div.
 
-After the services, provide a summary of the status of the system.
+Before the services div, put this at the top of the response:
+<h2>Triple Whale Services</h2>
+
+If all services are up, please provide a header that indicates all services are operational before listing the services, like this:
+<h3>All services are operational</h3>
+
+After the services div, provide a summary of the status of the system.
 Try to keep the summary to a few sentences.
 The summary should be worded to the users of triple whale, not to the devOps team.
 We want to keep them informed, but not overwhelmed with technical details.
