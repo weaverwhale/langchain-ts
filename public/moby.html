@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Langchain</title>
+    <link rel="icon" href="/favicon.svg" />
+    <style>
+      pre {
+        display: inline;
+      }
+      #app {
+        margin: 0 auto;
+        width: 80%;
+        max-width: 500px;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div id="app">
+      <h1>🐳 Moby</h1>
+      <p>Creating enhanced agents with Langchain and Langfuse.</p>
+      <div>
+        You can post to
+        <pre>/ask-moby</pre>
+        with an object containing a
+        <pre>question</pre>
+        .
+      </div>
+      <p>
+        <a target="_blank" href="https://github.com/weaverwhale/langchain-ts">Github</a> |
+        <a target="_blank" href="https://langchain-ts.onrender.com/">Live demo</a>
+      </p>
+      <div id="answer">
+        <h2>Asking Moby: "Tell me a bit about yourself"</h2>
+        <p>Please be patient; he usually takes 5-10 seconds to reply.</p>
+      </div>
+    </div>
+  </body>
+
+  <script>
+    const app = document.getElementById('app')
+    fetch(`/ask-moby${window.location.search}`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        question: 'Tell me a bit about yourself',
+      }),
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        try {
+          const parsedData = JSON.parse(JSON.stringify(data))
+          console.log(parsedData)
+
+          if (parsedData.answer) {
+            const d1 = document.createElement('div')
+            d1.innerHTML += '<h2>Moby says:</h2>'
+
+            const d2 = document.createElement('div')
+            d2.innerHTML = parsedData.answer.output ?? parsedData.answer
+            document.getElementById('answer').innerHTML = `${d1.innerHTML}${d2.innerHTML}${
+              parsedData.isCached
+                ? `<p><i>Last updated ${parseInt(
+                    Math.abs((new Date() - new Date(parseInt(parsedData.time))) / 60000),
+                  )} minutes ago</i></p>`
+                : ''
+            }`
+          }
+        } catch {}
+      })
+  </script>
+</html>

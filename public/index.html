@@ -2,7 +2,7 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <title>Langchain</title>
+    <title>Status</title>
     <link rel="icon" href="/favicon.svg" />
     <style>
       pre {
@@ -18,57 +18,44 @@
 
   <body>
     <div id="app">
-      <h1>🐳 Langchain</h1>
-      <p>Creating enhanced agents with Langchain and Langfuse.</p>
-      <div>
-        You can post to
-        <pre>/ask-moby</pre>
-        with an object containing a
-        <pre>question</pre>
-        .
-      </div>
+      <h1>🐳 Status</h1>
+      <p>
+        Provides the status of various Triple Whale services, and returns the result processed by
+        AI.
+      </p>
       <p>
         <a target="_blank" href="https://github.com/weaverwhale/langchain-ts">Github</a> |
         <a target="_blank" href="https://langchain-ts.onrender.com/">Live demo</a>
       </p>
       <div id="answer">
-        <h2>Asking Moby: "Tell me a bit about yourself"</h2>
-        <p>Please be patient; he usually takes 5-10 seconds to reply.</p>
+        <h2>Fetching..</h2>
+        <p>This usually takes 5-10 seconds.</p>
       </div>
     </div>
   </body>
 
   <script>
     const app = document.getElementById('app')
-    fetch(`/ask-moby${window.location.search}`, {
+    fetch(`/get-status${window.location.search}`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({
-        question: 'Tell me a bit about yourself',
-      }),
     })
       .then((res) => res.json())
       .then((data) => {
         try {
           const parsedData = JSON.parse(JSON.stringify(data))
           console.log(parsedData)
-
-          if (parsedData.answer) {
-            const d1 = document.createElement('div')
-            d1.innerHTML += '<h2>Moby says:</h2>'
-
-            const d2 = document.createElement('div')
-            d2.innerHTML = parsedData.answer.output ?? parsedData.answer
-            document.getElementById('answer').innerHTML = `${d1.innerHTML}${d2.innerHTML}${
-              parsedData.isCached
-                ? `<p><i>Last updated ${parseInt(
-                    Math.abs((new Date() - new Date(parseInt(parsedData.time))) / 60000),
-                  )} minutes ago</i></p>`
-                : ''
-            }`
-          }
+          document.getElementById('answer').innerHTML = `<h2>Triple Whale Services</h2>${
+            parsedData.answer.output
+          }${
+            parsedData.isCached
+              ? `<p><i>Last updated ${parseInt(
+                  Math.abs((new Date() - new Date(parseInt(parsedData.time))) / 60000),
+                )} minutes ago</i></p>`
+              : ''
+          }`
         } catch {}
       })
   </script>
