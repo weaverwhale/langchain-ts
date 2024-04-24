@@ -11,57 +11,82 @@
   <body>
     <div id="app">
       <h1>🐳 Moby</h1>
-      <p>Creating enhanced agents with Langchain and Langfuse.</p>
       <div>
         You can post to
         <pre>/ask-moby</pre>
         with an object containing a
         <pre>question</pre>
-        .
       </div>
-      <p>
-        <a target="_blank" href="https://github.com/weaverwhale/langchain-ts">Github</a> |
-        <a target="_blank" href="https://langchain-ts.onrender.com/">Live demo</a>
-      </p>
-      <div id="answer">
-        <h2>Asking Moby: "Tell me a bit about yourself"</h2>
-        <p>Please be patient; sometimes he takes 5-10 seconds to reply.</p>
+      <div>
+        You can also include a
+        <pre>conversationId</pre>
+        to continue a conversation
       </div>
+      <div id="question">
+        <form id="form">
+          <textarea id="question-input" name="question" placeholder="Ask anything..."></textarea>
+          <button type="submit" id="ask">Ask</button>
+        </form>
+      </div>
+      <div id="answer"></div>
     </div>
   </body>
 
   <script>
     const app = document.getElementById('app')
-    fetch(`/ask-moby${window.location.search}`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        question: 'Tell me a bit about yourself',
-      }),
-    })
-      .then((res) => res.json())
-      .then((data) => {
-        try {
-          const parsedData = JSON.parse(JSON.stringify(data))
-          console.log(parsedData)
+    async function askMoby(q) {
+      const question = q.length > 0 ? q : 'Tell me a bit about yourself'
 
-          if (parsedData.answer) {
-            const d1 = document.createElement('div')
-            d1.innerHTML += '<h2>Moby says:</h2>'
+      document.getElementById('answer').innerHTML = `<h2>Asking Moby: "${question}"</h2>
+      <p>Please be patient; sometimes he takes 5-10 seconds to reply.</p>
+      `
 
-            const d2 = document.createElement('div')
-            d2.innerHTML = parsedData.answer.output ?? parsedData.answer
-            document.getElementById('answer').innerHTML = `${d1.innerHTML}${d2.innerHTML}${
-              parsedData.isCached
-                ? `<p><i>Last updated ${parseInt(
-                    Math.abs((new Date() - new Date(parseInt(parsedData.time))) / 60000),
-                  )} minutes ago</i></p>`
-                : ''
-            }`
-          }
-        } catch {}
+      const form = document.getElementById('form')
+      Array.from(form.elements).forEach((formElement) => (formElement.disabled = true))
+
+      await fetch(`/ask-moby${window.location.search}`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          question,
+        }),
       })
+        .then((res) => res.json())
+        .then((data) => {
+          try {
+            const parsedData = JSON.parse(JSON.stringify(data))
+            console.log(parsedData)
+
+            if (parsedData.answer) {
+              const d1 = document.createElement('div')
+              d1.innerHTML += `<h2>Moby's response to "${question}" is..</h2>`
+
+              const d2 = document.createElement('div')
+              d2.innerHTML = parsedData.answer.output ?? parsedData.answer
+              document.getElementById('answer').innerHTML = `${d1.innerHTML}${d2.innerHTML}${
+                parsedData.isCached
+                  ? `<p><i>Last updated ${parseInt(
+                      Math.abs((new Date() - new Date(parseInt(parsedData.time))) / 60000),
+                    )} minutes ago</i></p>`
+                  : ''
+              }`
+            }
+          } catch {}
+        })
+      Array.from(form.elements).forEach((formElement) => (formElement.disabled = false))
+    }
+
+    // ask moby on form submit
+    document.getElementById('form').addEventListener('submit', async (e) => {
+      e.preventDefault()
+      e.stopPropagation()
+      const question = document.getElementById('question-input').value
+      await askMoby(question)
+    })
+
+    // ask one time for the one time
+    document.getElementById('ask').click()
   </script>
 </html>

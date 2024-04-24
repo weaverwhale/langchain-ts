@@ -5,6 +5,7 @@
   --blue: #0c70f2;
   --light-blue: #dbe8f7;
   --black: #000;
+  --white: #fff;
   --transparent: rgba(255, 255, 255, 0);
 }
 
@@ -51,6 +52,45 @@ p {
   margin-bottom: 2rem;
 }
 
+pre {
+  display: inline-block;
+  /* sick animated text */
+  background: black;
+  -webkit-text-fill-color: transparent;
+  background-image: url(sick.gif);
+  background-position: 0 0;
+  background-size: contain;
+  -webkit-background-clip: text;
+  background-clip: text;
+}
+
+form {
+  width: 100%;
+  display: flex;
+  gap: 1em;
+}
+
+form textarea {
+  flex-basis: 200%;
+}
+
+input,
+textarea,
+button {
+  display: block;
+  appearance: none;
+  padding: 1em;
+  background: var(--white);
+  border: 1px solid var(--blue);
+  border-radius: 5px;
+  width: 100%;
+}
+
+button {
+  background: var(--blue);
+  color: var(--white);
+}
+
 body {
   margin: 0;
   padding: 0;
@@ -85,7 +125,7 @@ nav img {
   }
 }
 
-nav a {
+a {
   color: var(--black);
 }
 
