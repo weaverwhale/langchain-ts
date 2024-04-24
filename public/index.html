@@ -35,11 +35,14 @@
         try {
           const parsedData = JSON.parse(JSON.stringify(data))
           console.log(parsedData)
+          const updatedMinutes = parseInt(
+            Math.abs((new Date() - new Date(parseInt(parsedData.time))) / 60000),
+          )
           document.getElementById('answer').innerHTML = `${parsedData.answer.output}${
             parsedData.isCached
-              ? `<p><i>Last updated ${parseInt(
-                  Math.abs((new Date() - new Date(parseInt(parsedData.time))) / 60000),
-                )} minutes ago</i></p>`
+              ? `<p><i>Last updated ${
+                  updatedMinutes <= 0 ? 'less than a minute' : `${updatedMinutes} minutes`
+                } ago</i></p>`
               : ''
           }`
         } catch {}
