@@ -1,5 +1,6 @@
 import { supabase } from './supabase'
 import { FIVE_MINUTES } from './constants'
+import loggy from './loggy'
 
 export const getCache = async (context: string, time: number, question?: any) => {
   if (context === 'status') {
@@ -39,7 +40,7 @@ export const saveToCache = async (
       if (error) {
         console.error(error)
       } else {
-        console.log('Cached question/answer')
+        loggy('Cached question/answer')
       }
     } catch {}
   }

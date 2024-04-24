@@ -10,6 +10,7 @@ import {
 import { modelWithFunctions, mobyModelWithFunctions, newModelWithFunctions } from './llm'
 import { defaultQuestion, defaultShopId } from './constants'
 import random from './idGenerator'
+import loggy from './loggy'
 
 // langchain stuff
 import { RunnableSequence } from '@langchain/core/runnables'
@@ -24,7 +25,7 @@ export const ask = async (
   source: SourceType,
   conversationId?: string,
 ): Promise<Answer> => {
-  console.log(
+  loggy(
     `[${conversationId ?? 'new convo'}] Asking ${source} question: ${JSON.stringify(
       input,
     ).substring(0, 100)}`,

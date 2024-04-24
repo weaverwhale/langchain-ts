@@ -14,6 +14,7 @@ import {
   gistSystemPrompt,
   statusSystemPrompt,
 } from './constants'
+import loggy from './loggy'
 
 const generatePromptTemplate = (sentPrompt: string) =>
   ChatPromptTemplate.fromMessages([
@@ -70,7 +71,7 @@ const helpCenter = new DynamicTool({
       }).then((res) => res.json())
 
       if (data && data.answer) {
-        console.log('Help center answer', data.answer)
+        loggy('Help center answer', data.answer)
         generation.end({
           output: JSON.stringify(data.answer),
           level: 'DEFAULT',
@@ -158,7 +159,7 @@ const askMoby = new DynamicTool({
       }).then((res) => res.json())
 
       if (data && data.data && data.data.length > 0) {
-        console.log('Willy answer', data.data)
+        loggy('Willy answer', data.data)
 
         let preparedData = ''
         for (const item of data.data) {

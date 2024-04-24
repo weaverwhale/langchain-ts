@@ -1,6 +1,7 @@
 import express, { Request, Response } from 'express'
-import chalk from 'chalk'
 import * as dotenv from 'dotenv'
+import chalk from 'chalk'
+import loggy from './helpers/loggy'
 import handler from './helpers/handler'
 import crons from './helpers/crons'
 
@@ -9,13 +10,14 @@ import crons from './helpers/crons'
 // -----------------------
 dotenv.config()
 const { NODE_ENV } = process.env
+const isProd = NODE_ENV === 'production'
+const appName = chalk.hex('#1877f2')('[🐳] ')
 
 // -----------------------
 // express app
 // -----------------------
 const app = express()
-const port = 9179
-const appName = chalk.hex('#1877f2')('[🐳] ')
+const port = isProd ? 80 : 9179
 app.use(express.json())
 
 // -----------------------
@@ -37,15 +39,8 @@ app.use(express.static('public', { extensions: ['html'] }))
 crons()
 
 // -----------------------
-// logger
+// start listening
 // -----------------------
-const loggy = () => {
-  console.log(
-    appName +
-      chalk.green(
-        `Langchain listening http://localhost:${NODE_ENV === 'production' ? '80' : port}`,
-      ),
-  )
-}
-
-NODE_ENV === 'production' ? app.listen('80', loggy) : app.listen(port, loggy)
+app.listen(port, () =>
+  loggy(appName + (isProd ? `Listening on port ${port}` : `Listening on http://localhost:${port}`)),
+)

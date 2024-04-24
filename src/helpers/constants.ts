@@ -118,20 +118,7 @@ export const statusUrls = [
     },
   },
   {
-    title: 'Attribution',
-    url: 'http://attribution.srv.whale3.io/get-orders-with-journeys-v2',
-    body: {
-      shop: defaultShopId,
-      startDate: '2024-01-01',
-      endDate: '2024-01-01',
-    },
-  },
-  {
-    title: 'Pixel',
-    url: `http://pixel.srv.whale3.io/ping`,
-  },
-  {
-    title: 'Compare Stats (Summary)',
+    title: 'Summary (Compare Stats)',
     url: `http://summary-page.srv.whale3.io/compare-stats`,
     body: {
       groupStatsBy: 'hour',
@@ -146,6 +133,19 @@ export const statusUrls = [
       todayHourSubtractForPrevPeriod: true,
       useNexus: true,
       useOrdersNexus: false,
+    },
+  },
+  {
+    title: 'Pixel',
+    url: `http://pixel.srv.whale3.io/ping`,
+  },
+  {
+    title: 'Attribution',
+    url: 'http://attribution.srv.whale3.io/get-orders-with-journeys-v2',
+    body: {
+      shop: defaultShopId,
+      startDate: '2024-01-01',
+      endDate: '2024-01-01',
     },
   },
   {
