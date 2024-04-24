@@ -1,10 +1,7 @@
 import { Request, Response } from 'express'
 import { askQuestion } from './ask'
 import { getStatus } from './status'
-
-let statusCache: any = null
-let cacheTime: number = 0
-const FIVE_MINUTES = 5 * 60 * 1000
+import { getCache, saveToCache } from './cache'
 
 export const handler = async (req: Request, res: Response, context: SourceType) => {
   const conversationId = req.body?.conversationId?.toString().trim() ?? null
@@ -22,6 +19,17 @@ export const handler = async (req: Request, res: Response, context: SourceType) 
       error: true,
     })
 
+  const cachedData = await getCache(context, currentTime, isStatus ? null : input)
+  const latestCacheHit = cachedData?.[0]
+
+  if (latestCacheHit && latestCacheHit.answer) {
+    console.log(`Cache hit for ${context}`)
+    return res.json({
+      ...latestCacheHit,
+      isCached: true,
+    })
+  }
+
   if (url) {
     try {
       input = await fetch(url).then((res) => res.text())
@@ -30,19 +38,11 @@ export const handler = async (req: Request, res: Response, context: SourceType) 
       return res.status(500).send(e)
     }
   } else if (isStatus) {
-    if (statusCache && currentTime - cacheTime < FIVE_MINUTES) {
-      return res.json({
-        answer: statusCache,
-        isCached: true,
-        cacheTime,
-      })
-    } else {
-      try {
-        input = await getStatus().then((res) => JSON.stringify(res))
-      } catch (e) {
-        console.error(e)
-        return res.status(500).send(e)
-      }
+    try {
+      input = await getStatus().then((res) => JSON.stringify(res))
+    } catch (e) {
+      console.error(e)
+      return res.status(500).send(e)
     }
   } else if (data?.length > 0) {
     input = JSON.stringify(data)
@@ -50,11 +50,7 @@ export const handler = async (req: Request, res: Response, context: SourceType) 
 
   try {
     const answer = await askQuestion(input, context, conversationId)
-
-    if (isStatus && answer) {
-      statusCache = answer
-      cacheTime = currentTime
-    }
+    saveToCache(context, currentTime, input, answer)
 
     return res.json({
       answer: answer ?? 42,

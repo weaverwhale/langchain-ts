@@ -60,7 +60,13 @@
 
             const d2 = document.createElement('div')
             d2.innerHTML = parsedData.answer.output ?? parsedData.answer
-            document.getElementById('answer').innerHTML = `${d1.innerHTML}${d2.innerHTML}`
+            document.getElementById('answer').innerHTML = `${d1.innerHTML}${d2.innerHTML}${
+              parsedData.isCached
+                ? `<p><i>Last updated ${parseInt(
+                    Math.abs((new Date() - new Date(parseInt(parsedData.time))) / 60000),
+                  )} minutes ago</i></p>`
+                : ''
+            }`
           }
         } catch {}
       })

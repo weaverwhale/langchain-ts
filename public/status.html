@@ -50,8 +50,8 @@
             parsedData.answer.output
           }${
             parsedData.isCached
-              ? `<p><i>Cached ${parseInt(
-                  Math.abs((new Date() - new Date(parsedData.cacheTime)) / 60000),
+              ? `<p><i>Last updated ${parseInt(
+                  Math.abs((new Date() - new Date(parseInt(parsedData.time))) / 60000),
                 )} minutes ago</i></p>`
               : ''
           }`

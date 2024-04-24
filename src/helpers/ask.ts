@@ -107,17 +107,15 @@ export const ask = async (
       console.error(error)
     }
   } else {
-    const { error } = await supabase.from('conversations').insert([
-      {
-        id: conversationId,
-        source,
-        messages: [
-          ...messages,
-          { role: 'user', content: invokee.input },
-          { role: 'ai', content: invokee.output },
-        ],
-      },
-    ])
+    const { error } = await supabase.from('conversations').upsert({
+      id: conversationId,
+      source,
+      messages: [
+        ...messages,
+        { role: 'user', content: invokee.input },
+        { role: 'ai', content: invokee.output },
+      ],
+    })
 
     if (error) {
       console.error(error)

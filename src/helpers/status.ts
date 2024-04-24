@@ -1,3 +1,5 @@
+import { askQuestion } from './ask'
+import { saveToCache } from './cache'
 import { statusUrls, defaultHeaders } from './constants'
 
 const isUp = async (url: string, headers?: Record<string, string>, body?: any) => {
@@ -27,4 +29,10 @@ export const getStatus = async () => {
   return {
     results,
   }
+}
+
+export const hydrateStatus = async () => {
+  const question = await getStatus().then((res) => JSON.stringify(res))
+  const answer = await askQuestion(question, 'status')
+  await saveToCache('status', Date.now(), question, answer)
 }
