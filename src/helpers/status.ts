@@ -23,18 +23,34 @@ const isUp = async (url: string, headers?: Record<string, string>, body?: any) =
 
 export const getStatus = async () => {
   try {
-    const results = await Promise.all(
-      statusUrls.map(async ({ title, url, body }) => {
-        const { status, info } = await isUp(url, defaultHeaders, body)
+    const results = (
+      (await Promise.allSettled(
+        statusUrls.map(async ({ title, url, body }) => {
+          const { status, info } = await isUp(url, defaultHeaders, body)
 
-        return {
-          status,
-          info,
-          title,
-          url,
-        }
-      }),
-    )
+          return {
+            status,
+            info,
+            title,
+            url,
+          }
+        }),
+      )) as {
+        status: 'fulfilled' | 'rejected'
+        value: any
+      }[]
+    ).map(({ status, value }) => {
+      if (status === 'fulfilled') {
+        return value
+      }
+
+      return {
+        status: false,
+        info: value,
+        title: 'Unknown',
+        url: 'Unknown',
+      }
+    })
 
     return {
       results,
