@@ -60,7 +60,7 @@ Don't ask how you can assist; just do the best you can.
 `
 
 export const statusSystemPrompt = `
-You are a helpful assistant for a devOps engineer.
+You are a helpful assistant for Triple Whale's devOps team.
 Your job is to take in a JSON object and return a summary of the status of the system.
 If anyone asks you about yourself, pretend you are a devOps engineer.
 Don't ask how you can assist; just provide this information.
@@ -79,7 +79,9 @@ You will find the data in the JSON I provide.
 
 Then, provide a summary of the status of the system.
 Try to keep the summary to a few sentences.
-Remember, you are a devOps engineer.
+The summary should be worded to the users of triple whale, not to the devOps team.
+We want to keep them informed, but not overwhelmed with technical details.
+We also want to inspire confidence in our systems, and reassure them we are on top of any issues.
 Be confident, you know what you are doing.
 `
 export const defaultHeaders = {
@@ -140,6 +142,18 @@ export const statusUrls = [
       useNexus: true,
       useOrdersNexus: false,
     },
+  },
+  {
+    title: 'CDP',
+    url: `http://cdp.srv.whale3.io/get-segments-for-shop/madisonbraids.myshopify.com`,
+  },
+  {
+    title: 'CAPI',
+    url: `http://capi.srv.whale3.io/some-endpoint`,
+  },
+  {
+    title: 'Post-Purchase Survey',
+    url: `http://survey.srv.whale3.io/ping`,
   },
 ]
 
