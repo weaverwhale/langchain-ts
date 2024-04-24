@@ -142,9 +142,9 @@
     zod-to-json-schema "^3.22.5"
 
 "@langchain/community@~0.0.47":
-  version "0.0.48"
-  resolved "https://registry.yarnpkg.com/@langchain/community/-/community-0.0.48.tgz#a0a715f77d2a6914036c7b6fc32a760e1bf6bc9b"
-  integrity sha512-jG7dpJkgKtwbrSLsxW4mXmECopTj5tRt4+B+QcKCqZm7yEghFR44Xj5OkDWtzzsjpL47RJck5AJ8MsQnmi7WDQ==
+  version "0.0.51"
+  resolved "https://registry.yarnpkg.com/@langchain/community/-/community-0.0.51.tgz#7952c9489cdfbb9ada489a6482e047c18fea249d"
+  integrity sha512-TInG0nDCGIwg2iwHJkv1OYGVR2fDMYdpKRuuLlQoevvcHcCRIVlQS5d0MnAx0bWGUbVdkKpshrH8Ltpxt6fewA==
   dependencies:
     "@langchain/core" "~0.1.56"
     "@langchain/openai" "~0.0.28"
@@ -156,9 +156,9 @@
     zod-to-json-schema "^3.22.5"
 
 "@langchain/core@~0.1.56":
-  version "0.1.57"
-  resolved "https://registry.yarnpkg.com/@langchain/core/-/core-0.1.57.tgz#c592ad6715e373e4203f590f20b8b999e64cfb16"
-  integrity sha512-6wOwidPkkRcANrOKl88+YYpm3jHfpg6W8EqZHQCImSAlxdEhyDSq2eeQKHOPCFCrfNWkClaNn+Wlzzz4Qwf9Tg==
+  version "0.1.59"
+  resolved "https://registry.yarnpkg.com/@langchain/core/-/core-0.1.59.tgz#5c01d993c75c89d6fdbf00e830d33d002580bbf2"
+  integrity sha512-cdLi/hH/gj1CIWVcwkOxM+QYpz5kYIBxpuRkoye3OwHry9Qa9djwlsGxpUmrv5pIbPkYd7GK9L+xTQqyYIAp6A==
   dependencies:
     ansi-styles "^5.0.0"
     camelcase "6"
@@ -166,6 +166,7 @@
     js-tiktoken "^1.0.8"
     langsmith "~0.1.7"
     ml-distance "^4.0.0"
+    mustache "^4.2.0"
     p-queue "^6.6.2"
     p-retry "4"
     uuid "^9.0.0"
@@ -183,10 +184,10 @@
     zod "^3.22.4"
     zod-to-json-schema "^3.22.3"
 
-"@supabase/auth-js@2.63.0":
-  version "2.63.0"
-  resolved "https://registry.yarnpkg.com/@supabase/auth-js/-/auth-js-2.63.0.tgz#41ff746a50a916208c1f2c6898deacf92c6d0b91"
-  integrity sha512-yIgcHnlgv24GxHtVGUhwGqAFDyJkPIC/xjx7HostN08A8yCy8HIfl4JEkTKyBqD1v1L05jNEJOUke4Lf4O1+Qg==
+"@supabase/auth-js@2.63.1":
+  version "2.63.1"
+  resolved "https://registry.yarnpkg.com/@supabase/auth-js/-/auth-js-2.63.1.tgz#1d6178256d1502ae5c4707e4e18baa8fb119799e"
+  integrity sha512-iwdmIc/w5QN7aMfYThEgUt1l2i0KuohZ4XNk1adECg0LETQYEzmbVToKFKZLLZ+GyNtpsExSgVY/AUWOwubGXA==
   dependencies:
     "@supabase/node-fetch" "^2.6.14"
 
@@ -229,11 +230,11 @@
     "@supabase/node-fetch" "^2.6.14"
 
 "@supabase/supabase-js@^2.42.3":
-  version "2.42.4"
-  resolved "https://registry.yarnpkg.com/@supabase/supabase-js/-/supabase-js-2.42.4.tgz#1d0cdf8f8d3a1832a74fbf7e5b0ecc148a5a984c"
-  integrity sha512-tRn3wloKnnFdmEr3O2VIaxqzKACpyJ3ymLDmeq0V5lvhkJ+B4VH+QmDrnBbJJUkO2t+IHg65j5jombZxU4yMyw==
+  version "2.42.5"
+  resolved "https://registry.yarnpkg.com/@supabase/supabase-js/-/supabase-js-2.42.5.tgz#e062259ab71e060a3eda09f2e77e4185d43a47ac"
+  integrity sha512-T/FlVmNHR/MDl8KhmNLb94dh+cTpqyvFlNI/Zd97dwS1yCm59xM+sTzmQLKnGNY5sPuwp40/w52bWrczdjOYtA==
   dependencies:
-    "@supabase/auth-js" "2.63.0"
+    "@supabase/auth-js" "2.63.1"
     "@supabase/functions-js" "2.3.0"
     "@supabase/node-fetch" "2.6.15"
     "@supabase/postgrest-js" "1.15.2"
@@ -318,9 +319,9 @@
   integrity sha512-B34A7uot1Cv0XtaHRYDATltAdKx0BvVKNgYNqE4WjtPUa4VQJM7kxeXcVKaH+KS+kCmZ+6w+QaUdcljiheiBJA==
 
 "@types/qs@*":
-  version "6.9.14"
-  resolved "https://registry.yarnpkg.com/@types/qs/-/qs-6.9.14.tgz#169e142bfe493895287bee382af6039795e9b75b"
-  integrity sha512-5khscbd3SwWMhFqylJBLQ0zIu7c1K6Vz0uBIt915BI3zV0q1nfjRQD3RqSBcPaO6PHEF4ov/t9y89fSiyThlPA==
+  version "6.9.15"
+  resolved "https://registry.yarnpkg.com/@types/qs/-/qs-6.9.15.tgz#adde8a060ec9c305a82de1babc1056e73bd64dce"
+  integrity sha512-uXHQKES6DQKKCLh441Xv/dwxOq1TVS3JPUMlEqoEglvlhR6Mxnlew/Xq/LRVHpLyk7iK3zODe1qYHIMltO7XGg==
 
 "@types/range-parser@*":
   version "1.2.7"
@@ -858,9 +859,9 @@ jsonpointer@^5.0.1:
   integrity sha512-p/nXbhSEcu3pZRdkW1OfJhpsVtW1gd4Wa1fnQc9YLiTfAjn0312eMKimbdIQzuZl9aa9xUGaRlP9T/CJE/ditQ==
 
 langchain@^0.1.33:
-  version "0.1.33"
-  resolved "https://registry.yarnpkg.com/langchain/-/langchain-0.1.33.tgz#959f0f023975092569b49f1f07fe60c11c643530"
-  integrity sha512-IrRd839x8eAmDutHNDMHGzIjufyWt/ckJrnRB2WifIJmtLWNRNQo5jZd7toeBU0UOVOQxoPtQGYf8lR0ar7vIQ==
+  version "0.1.35"
+  resolved "https://registry.yarnpkg.com/langchain/-/langchain-0.1.35.tgz#6ee22c140201597d7983f3f12c75a3c6f16cbc0c"
+  integrity sha512-wTaTNzaAPb/umcoWxFupc0QGsEJvPB6pRE8Ecy8v4CCsn/a5O6QpfRylvJKXXWoxGG8BI4L3G+HjsXCDUNxVrQ==
   dependencies:
     "@anthropic-ai/sdk" "^0.9.1"
     "@langchain/community" "~0.0.47"
@@ -885,24 +886,24 @@ langchainhub@~0.0.8:
   resolved "https://registry.yarnpkg.com/langchainhub/-/langchainhub-0.0.8.tgz#fd4b96dc795e22e36c1a20bad31b61b0c33d3110"
   integrity sha512-Woyb8YDHgqqTOZvWIbm2CaFDGfZ4NTSyXV687AG4vXEfoNo7cGQp7nhl7wL3ehenKWmNEmcxCLgOZzW8jE6lOQ==
 
-langfuse-core@^3.5.0:
-  version "3.5.0"
-  resolved "https://registry.yarnpkg.com/langfuse-core/-/langfuse-core-3.5.0.tgz#aa8b5bd46f2b80b581a2a484ad62a36e362d8b52"
-  integrity sha512-m0fxs0LrcetXQuA3Cc789TjwI17yforZO2BhNfBYADoODr987AIE+6pa+qaJJLIkMwmjrcft3wvQEBMKGXMljQ==
+langfuse-core@^3.8.0:
+  version "3.8.0"
+  resolved "https://registry.yarnpkg.com/langfuse-core/-/langfuse-core-3.8.0.tgz#ce8520b09ebdf6122377fda968c38cdbd92e6477"
+  integrity sha512-jP46WTVvfCgp97/cRC882ADvsLH4fgjF5yHqYfKB7fqFAXg1B2H6PPirJVU9oMTzhBJ0LqmPMle91G09GIY85w==
   dependencies:
     mustache "^4.2.0"
 
 langfuse@^3.4.0:
-  version "3.5.0"
-  resolved "https://registry.yarnpkg.com/langfuse/-/langfuse-3.5.0.tgz#afc81de1fda38cc7967ee1e934adc2f6ca9aa956"
-  integrity sha512-nGJ0MpeeKWGRWDfTN5+yuY89rD2daDb5bJO+5o7nYzgB+05QqF/xjm6vjruZFM+5HqXeeH/tY1C5Nuy2K15wLw==
+  version "3.8.0"
+  resolved "https://registry.yarnpkg.com/langfuse/-/langfuse-3.8.0.tgz#e426a0beb1290cbcaa3c93fb6dffdcbc71c48513"
+  integrity sha512-leWIEnEQffeLhZtXclPZcMXEgtehxvXgbjOegpkz9SwjDnUFTa4AhE1mjy5AT8kz2bvqSaIoOGwtY6dMsHTTJA==
   dependencies:
-    langfuse-core "^3.5.0"
+    langfuse-core "^3.8.0"
 
 langsmith@~0.1.1, langsmith@~0.1.7:
-  version "0.1.14"
-  resolved "https://registry.yarnpkg.com/langsmith/-/langsmith-0.1.14.tgz#2b889dbcfb49547614df276a4a5a063092a1585d"
-  integrity sha512-iEzQLLB7/0nRpAwNBAR7B7N64fyByg5UsNjSvLaCCkQ9AS68PSafjB8xQkyI8QXXrGjU1dEqDRoa8m4SUuRdUw==
+  version "0.1.18"
+  resolved "https://registry.yarnpkg.com/langsmith/-/langsmith-0.1.18.tgz#ebfe4efb98bad93e042e787f0c6795267a8dabe8"
+  integrity sha512-LHk0aIFAl3/iiKvUzAiM8Xdm13bRO70XERQeHCF99fL2X815Jc47nxu6m7usSuQC8sw6rirCKZbGm18cqdUEzA==
   dependencies:
     "@types/uuid" "^9.0.1"
     commander "^10.0.1"
@@ -1037,9 +1038,9 @@ on-finished@2.4.1:
     ee-first "1.1.1"
 
 openai@^4.32.1:
-  version "4.33.1"
-  resolved "https://registry.yarnpkg.com/openai/-/openai-4.33.1.tgz#7f14c28ea0994ff6eacc2dbca2131c61e7692cd4"
-  integrity sha512-0DH572aSxGTT1JPOXgJQ9mjiuSPg/7scPot8hLc5I1mfQxPxLXTZWJpWerKaIWOuPkR2nrB0SamGDEehH8RuWA==
+  version "4.38.3"
+  resolved "https://registry.yarnpkg.com/openai/-/openai-4.38.3.tgz#0e560541d9c31b0d4faaa6f660ade60dd5ee8052"
+  integrity sha512-mIL9WtrFNOanpx98mJ+X/wkoepcxdqqu0noWFoNQHl/yODQ47YM7NEYda7qp8JfjqpLFVxY9mQhshoS/Fqac0A==
   dependencies:
     "@types/node" "^18.11.18"
     "@types/node-fetch" "^2.6.4"
@@ -1327,11 +1328,11 @@ yaml@^2.2.1:
   integrity sha512-pIXzoImaqmfOrL7teGUBt/T7ZDnyeGBWyXQBvOVhLkWLN37GXv8NMLK406UY6dS51JfcQHsmcW5cJ441bHg6Lg==
 
 zod-to-json-schema@^3.22.3, zod-to-json-schema@^3.22.5:
-  version "3.22.5"
-  resolved "https://registry.yarnpkg.com/zod-to-json-schema/-/zod-to-json-schema-3.22.5.tgz#3646e81cfc318dbad2a22519e5ce661615418673"
-  integrity sha512-+akaPo6a0zpVCCseDed504KBJUQpEW5QZw7RMneNmKw+fGaML1Z9tUNLnHHAC8x6dzVRO1eB2oEMyZRnuBZg7Q==
+  version "3.23.0"
+  resolved "https://registry.yarnpkg.com/zod-to-json-schema/-/zod-to-json-schema-3.23.0.tgz#4fc60e88d3c709eedbfaae3f92f8a7bf786469f2"
+  integrity sha512-az0uJ243PxsRIa2x1WmNE/pnuA05gUq/JB8Lwe1EDCCL/Fz9MgjYQ0fPlyc2Tcv6aF2ZA7WM5TWaRZVEFaAIag==
 
 zod@^3.22.3, zod@^3.22.4:
-  version "3.22.4"
-  resolved "https://registry.yarnpkg.com/zod/-/zod-3.22.4.tgz#f31c3a9386f61b1f228af56faa9255e845cf3fff"
-  integrity sha512-iC+8Io04lddc+mVqQ9AZ7OQ2MrUKGN+oIQyq1vemgt46jwCwLfhq7/pwnBnNXXXZb8VTVLKwp9EDkx+ryxIWmg==
+  version "3.23.4"
+  resolved "https://registry.yarnpkg.com/zod/-/zod-3.23.4.tgz#c63805b2f39e10d4ab3d55eb3c8cdb472c79dfb1"
+  integrity sha512-/AtWOKbBgjzEYYQRNfoGKHObgfAZag6qUJX1VbHo2PRBgS+wfWagEY2mizjfyAPcGesrJOcx/wcl0L9WnVrHFw==
