@@ -111,7 +111,7 @@ export const statusUrls = [
     body: null,
   },
   {
-    title: 'Moby (Chat)',
+    title: 'Moby (AI Chat)',
     url: 'http://willy.srv.whale3.io/answer-nlq-question',
     body: {
       shopId: defaultShopId,
@@ -160,6 +160,15 @@ export const statusUrls = [
   {
     title: 'CAPI',
     url: `http://capi.srv.whale3.io/some-endpoint`,
+  },
+  {
+    title: 'Forecasting',
+    url: `http://forecasting.srv.whale3.io/get-shop-weights`,
+    body: {
+      shopId: defaultShopId,
+      startDate: '2024-01-01',
+      endDate: '2024-01-01',
+    },
   },
   {
     title: 'Post-Purchase Survey',
