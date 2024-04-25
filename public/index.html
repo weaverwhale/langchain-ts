@@ -41,7 +41,9 @@
           document.getElementById('answer').innerHTML = `${parsedData.answer.output}${
             parsedData.isCached
               ? `<p><i>Updated ${
-                  updatedMinutes <= 0 ? 'less than a minute' : `${updatedMinutes} minutes`
+                  updatedMinutes <= 0
+                    ? 'less than a minute'
+                    : `${updatedMinutes} minute${updatedMinutes !== 1 ? 's' : ''}`
                 } ago</i></p>`
               : ''
           }`
