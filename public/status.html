@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Triple Whale Status</title>
+    <link rel="icon" href="/favicon.svg" />
+    <link rel="stylesheet" href="/styles.css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+  </head>
+
+  <body>
+    <nav>
+      <img src="/logo.svg" />
+      <a href="https://app.triplewhale.com/signin" target="_blank">Sign in</a>
+    </nav>
+    <div id="app">
+      <h1>Marine Ecosystem</h1>
+      <div id="answer">
+        <h2>⏳ Fetching Services..</h2>
+        <p>Please be patient; sometimes this takes 5-10 seconds.</p>
+      </div>
+    </div>
+  </body>
+
+  <script>
+    const app = document.getElementById('app')
+    fetch(`/get-status${window.location.search}`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        try {
+          const parsedData = JSON.parse(JSON.stringify(data))
+          console.log(parsedData)
+          const updatedMinutes = parseInt(
+            Math.abs((new Date() - new Date(parseInt(parsedData.time))) / 60000),
+          )
+          document.getElementById('answer').innerHTML = `${parsedData.answer.output}${
+            parsedData.isCached
+              ? `<p><i>Updated ${
+                  updatedMinutes <= 0
+                    ? 'less than a minute'
+                    : `${updatedMinutes} minute${updatedMinutes !== 1 ? 's' : ''}`
+                } ago</i></p>`
+              : ''
+          }`
+        } catch {}
+      })
+  </script>
+</html>
