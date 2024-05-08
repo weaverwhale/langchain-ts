@@ -13,6 +13,7 @@ import {
   wikipediaPrompt,
   gistSystemPrompt,
   statusSystemPrompt,
+  forecastingPrompt,
 } from './constants'
 import loggy from './loggy'
 
@@ -106,6 +107,110 @@ const helpCenter = new DynamicTool({
       })
 
       return 'Error in helpCenter'
+    } finally {
+      await langfuse.shutdownAsync()
+    }
+  },
+})
+
+const remoteForecastingPrompt = await (
+  await langfuse.getPrompt('Forecasting_Prompt')
+).compile({ shopId: defaultShopId })
+const forecasting = new DynamicTool({
+  name: 'forecasting',
+  description: remoteForecastingPrompt ?? forecastingPrompt,
+  func: async (question: string, runManager, meta) => {
+    const sessionId = meta?.configurable?.sessionId
+    const shopId = meta?.configurable?.shopId
+
+    const trace = langfuse.trace({
+      name: 'forecasting',
+      input: JSON.stringify(question),
+      sessionId,
+    })
+
+    const generation = trace.generation({
+      name: 'forecasting',
+      input: JSON.stringify(question),
+      model: 'forecasting',
+    })
+
+    generation.update({
+      completionStartTime: new Date(),
+    })
+
+    try {
+      const body = {
+        question,
+        userId: null,
+        conversationId: sessionId,
+        stream: false,
+        source: 'chat',
+        dataType: 'forecasting',
+        shopId: shopId,
+        generateInsights: 'false',
+      }
+
+      const { data, text } = await fetch('http://willy.srv.whale3.io/answer-nlq-question', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${process.env.TW_IDENTITY_TOKEN}`,
+        },
+        body: JSON.stringify(body),
+      }).then((res) => res.json())
+
+      if (data && data.data && data.data.length > 0) {
+        loggy('Forecast answer', data.data)
+
+        let preparedData = ''
+        for (const item of data.data) {
+          preparedData += `${item.name} - ${item.value.slice(0, 50)}\n`
+        }
+
+        generation.end({
+          output: JSON.stringify(data.data?.answer?.output ?? data.data),
+          level: 'DEFAULT',
+        })
+
+        trace.update({
+          output: JSON.stringify(data.data?.answer?.output ?? data.data),
+        })
+
+        return preparedData
+      } else if (text && text.length > 0) {
+        generation.end({
+          output: JSON.stringify(text),
+          level: 'DEFAULT',
+        })
+
+        trace.update({
+          output: JSON.stringify(text),
+        })
+        return text
+      } else {
+        const output = "Didn't find requested data"
+        generation.end({
+          output,
+          level: 'WARNING',
+        })
+
+        trace.update({
+          output,
+        })
+        return output
+      }
+    } catch (error) {
+      generation.end({
+        output: JSON.stringify(error),
+        level: 'ERROR',
+      })
+
+      trace.update({
+        output: JSON.stringify(error),
+      })
+
+      return 'Error in forecasting'
     } finally {
       await langfuse.shutdownAsync()
     }
@@ -278,4 +383,4 @@ export const tools = [
   new Calculator(),
 ]
 
-export const mobyTools = [helpCenter, askMoby, ...tools]
+export const mobyTools = [helpCenter, askMoby, forecasting, ...tools]

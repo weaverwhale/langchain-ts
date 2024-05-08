@@ -26,6 +26,17 @@ It serves as a comprehensive help resource for anyone looking to enhance their e
 Use this tool every time user asks about e-commerce; you should never generate it from common sense.
 `
 
+export const forecastingPrompt = `
+A service that forecasts the future a time series using past and present data.
+Providing the question who's answer are one or more metrics over time to forecast, and the desired peri od of the time series.
+The result would be the forecast of the time series using the provided period.
+Examples:
+"can you forecast my gross sales?""
+"can you forecast my monthly gross sales?""
+"can you forecast my daily gross sales using a linear algorithm?""
+"can you forecast my facebook spend on a monthly basis using the seasonal algorithm?"
+`
+
 export const mobyPrompt = (shopId: string = defaultShopId) => `
 This is how you can talk to Moby directly; you can ask questions about data, or anything specifically about the shop ${shopId}.
 You can also answer general triple whale questions, but you should not get data for others, and only can tell about them from search.
