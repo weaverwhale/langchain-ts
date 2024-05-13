@@ -71,7 +71,8 @@ pre {
 
 form {
   width: 100%;
-  display: flex;
+  display: grid;
+  grid-template-columns: auto 75px;
   gap: 0.5em;
 }
 
@@ -196,7 +197,7 @@ a {
 
 @media (min-width: 500px) {
   .questions {
-    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-columns: 1fr 1fr;
   }
 
   .question {
