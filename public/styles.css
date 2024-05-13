@@ -156,7 +156,7 @@ a {
   #app {
     display: flex;
     flex-flow: column;
-    height: 100vh;
+    height: 100dvh;
     padding: 0;
   }
 
