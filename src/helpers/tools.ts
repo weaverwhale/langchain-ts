@@ -71,7 +71,7 @@ const helpCenter = new DynamicTool({
         }),
       }).then((res) => res.json())
 
-      if (data && data.answer) {
+      if (data && data.answer && data.answer.length > 0) {
         loggy('Help center answer', data.answer)
         generation.end({
           output: JSON.stringify(data.answer),
