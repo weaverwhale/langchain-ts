@@ -178,6 +178,7 @@ a {
 .clear {
   color: rgb(106, 106, 106);
   font-size: 0.9em;
+  margin-bottom: 2px;
   cursor: pointer;
 }
 
