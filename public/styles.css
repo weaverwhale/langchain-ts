@@ -12,6 +12,7 @@
 
 * {
   font-family: Inter, sans-serif;
+  box-sizing: border-box;
 }
 
 pre {
@@ -49,7 +50,8 @@ h3 {
   font-size: 1.5em;
 }
 
-p {
+p,
+.p {
   margin-bottom: 2rem;
 }
 
@@ -63,12 +65,20 @@ pre {
   background-size: contain;
   -webkit-background-clip: text;
   background-clip: text;
+  padding: 0;
+  margin: 0;
 }
 
 form {
   width: 100%;
   display: flex;
-  gap: 1em;
+  gap: 0.5em;
+}
+
+@media (min-width: 500px) {
+  form {
+    gap: 1em;
+  }
 }
 
 form textarea {
@@ -137,27 +147,64 @@ a {
 
 #app {
   margin: 0 auto;
-  width: 80%;
+  padding: 1em;
   max-width: 600px;
 }
 
-#services {
+.qna {
+  padding: 1em;
+}
+
+@media (max-width: 499px) {
+  #app {
+    max-height: calc(100vh - 52px);
+    overflow: scroll;
+    padding: 0;
+  }
+
+  .imessage {
+    margin: 0 !important;
+  }
+
+  .current-message {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    padding: 0.5em;
+  }
+}
+
+.clear {
+  color: rgb(106, 106, 106);
+  font-size: 0.9em;
+  cursor: pointer;
+}
+
+.questions {
   display: grid;
-  gap: 1rem;
-  margin-bottom: 2rem;
+  grid-template-columns: 1fr;
+  grid-gap: 1em;
+  margin-bottom: 2em;
 }
 
-#services p {
-  margin: 0;
-}
-
-#services strong {
-  font-weight: 500;
-  margin-left: 0.5rem;
+.question {
+  padding: 1em;
+  border-radius: 5px;
+  border: 1px solid var(--blue);
+  cursor: pointer;
 }
 
 @media (min-width: 500px) {
-  #services {
-    grid-template-columns: repeat(2, 1fr);
+  .questions {
+    grid-template-columns: 1fr 1fr 1fr;
   }
+
+  .question {
+    padding: 0.5em;
+  }
+}
+
+.question:hover {
+  box-shadow: 1px 5px 10px var(--blue);
 }
