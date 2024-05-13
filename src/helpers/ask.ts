@@ -38,12 +38,7 @@ export const ask = async (
     : isMoby
     ? mobySystemPromptTemplate
     : gptSystemPromptTemplate
-  const currentModelWithFunctions =
-    isStatus || isGist
-      ? newModelWithFunctions
-      : isMoby
-      ? mobyModelWithFunctions
-      : modelWithFunctions
+  const currentModelWithFunctions = isMoby ? mobyModelWithFunctions : modelWithFunctions
 
   const { data } = await supabase
     .from('conversations')

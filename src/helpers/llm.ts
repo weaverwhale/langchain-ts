@@ -1,13 +1,13 @@
 import { ChatOpenAI } from '@langchain/openai'
 import { convertToOpenAIFunction } from '@langchain/core/utils/function_calling'
 import { tools, mobyTools } from './tools'
-import { threeModel, fourModel } from './constants'
+import { fourOModel } from './constants'
 
-export const llm = (newModel: boolean = false) =>
+export const llm = () =>
   new ChatOpenAI({
-    model: newModel ? fourModel : threeModel,
+    model: fourOModel,
     openAIApiKey: process.env.OPENAI_API_KEY,
-    temperature: newModel ? 0.2 : 0,
+    temperature: 0.1,
   })
 
 export const modelWithFunctions = llm().bind({
@@ -16,8 +16,4 @@ export const modelWithFunctions = llm().bind({
 
 export const mobyModelWithFunctions = llm().bind({
   functions: mobyTools.map((tool) => convertToOpenAIFunction(tool)),
-})
-
-export const newModelWithFunctions = llm(true).bind({
-  functions: tools.map((tool) => convertToOpenAIFunction(tool)),
 })

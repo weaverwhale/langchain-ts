@@ -2,6 +2,7 @@ export const defaultShopId = 'madisonbraids.myshopify.com'
 
 export const threeModel = 'gpt-3.5-turbo-1106'
 export const fourModel = 'gpt-4-turbo'
+export const fourOModel = 'gpt-4o-2024-05-13'
 
 export const genericSystemPrompt = `You are a helpful assistant.`
 
