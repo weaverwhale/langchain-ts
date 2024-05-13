@@ -14,7 +14,7 @@
 
   <body>
     <div id="app">
-      <div class="qna">
+      <div class="top">
         <h1>🐳 Moby</h1>
         <div class="p">
           You can post to
@@ -48,21 +48,21 @@
           </p>
           <div id="bottom"></div>
         </div>
-        <div class="current-message">
-          <div class="clear" v-if="messages.length > 0" @click="clearConversation">
-            Clear conversation
-          </div>
-          <div class="ask-question">
-            <form @submit.prevent="ask()">
-              <input
-                id="question-input"
-                name="question"
-                placeholder="Ask anything..."
-                v-model="question"
-              />
-              <button type="submit">Ask</button>
-            </form>
-          </div>
+      </div>
+      <div class="current-message">
+        <div class="clear" v-if="messages.length > 0" @click="clearConversation">
+          Clear conversation
+        </div>
+        <div class="ask-question">
+          <form @submit.prevent="ask()">
+            <input
+              id="question-input"
+              name="question"
+              placeholder="Ask anything..."
+              v-model="question"
+            />
+            <button type="submit">Ask</button>
+          </form>
         </div>
       </div>
     </div>
