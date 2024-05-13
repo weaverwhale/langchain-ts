@@ -1,7 +1,7 @@
 /* forked from https://codepen.io/AllThingsSmitty/pen/jommGQ */
 .imessage {
   background-color: #fff;
-  border: 1px solid #e5e5ea;
+  border: 1px solid var(--blue);
   border-radius: 0.25rem;
   display: flex;
   flex-direction: column;
