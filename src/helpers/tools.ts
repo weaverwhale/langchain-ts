@@ -72,7 +72,7 @@ const helpCenter = new DynamicTool({
       }).then((res) => res.json())
 
       if (data && data.answer && data.answer.length > 0) {
-        loggy('Help center answer', data.answer)
+        loggy('Help center answered')
         generation.end({
           output: JSON.stringify(data.answer),
           level: 'DEFAULT',
@@ -161,7 +161,7 @@ const forecasting = new DynamicTool({
       }).then((res) => res.json())
 
       if (data && data.data && data.data.length > 0) {
-        loggy('Forecast answer', data.data)
+        loggy('Forecast answered')
 
         let preparedData = ''
         for (const item of data.data) {
@@ -264,7 +264,7 @@ const askMoby = new DynamicTool({
       }).then((res) => res.json())
 
       if (data && data.data && data.data.length > 0) {
-        loggy('Willy answer', data.data)
+        loggy('Willy answered')
 
         let preparedData = ''
         for (const item of data.data) {
